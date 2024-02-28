@@ -6,6 +6,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
     let myKeyboard = input.Keyboard();
 
+    let myBackground = objects.Background({  // ADDED THIS!!
+        imageSrc: 'assets/m106.jpg',
+        startPoint: { x: 0, y: 0 },
+        size: { width: graphics.canvas.width, height: graphics.canvas.height }
+    });
+
     let myText = objects.Text({
         text: 'This is a test',
         font: '32pt Arial',
@@ -32,6 +38,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     function render() {
         graphics.clear();
 
+        renderer.Background.render(myBackground); // ADDED THIS!!
         renderer.Lander.render(myLander);
         renderer.Text.render(myText);
     }

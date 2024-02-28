@@ -51,11 +51,18 @@ MyGame.graphics = (function() {
         context.restore();
     }
 
+    function drawImage(image, startPoint, size) {
+        context.save();
+        context.drawImage(image, startPoint.x, startPoint.y, size.width, size.height);
+        context.restore();
+    }
+
     let api = {
         get canvas() { return canvas; },
         clear: clear,
         drawTexture: drawTexture,
-        drawText: drawText
+        drawText: drawText,
+        drawImage: drawImage
     };
 
     return api;
