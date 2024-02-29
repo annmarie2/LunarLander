@@ -8,7 +8,8 @@
 //    s: int,                   // surface-roughness factor
 //    rg: int,                  // Gaussian random number
 //    safeZoneDistance: int,    // how long the safe zone is
-//    startHeight: int,         // y value for starting point
+//    canvasHeight: int,
+//    canvasWidth: int,
 //    lst: []
 // }
 //
@@ -17,8 +18,26 @@ MyGame.objects.terrain = function(spec) {
     'use strict';
 
     // create lst
-    let lst = [];
-    // fill lst recursively :))
+    // calculate how many points will be in the line:
+    let numPoints = Math.pow(2, spec.iterations) + 1;
+    let lst = new Array(numPoints);
+
+    // add endpoints, randomly choose their elevations:
+    let startY = Math.floor(Math.random() * spec.canvasHeight);
+    let endY = Math.floor(Math.random() * spec.canvasHeight);
+    
+    // add the safe zones
+    let safeZoneStartX = Math.floor(Math.random() * lst.length);
+    let safeZoneStartY = Math.floor(Math.random() * spec.canvasHeight);
+    // TODO: GET ENDPOINTS FOR SAFE ZONES,
+    for (let i = safeZoneStartX; i < safeZoneStartX + spec.safeZoneDistance; i++) {
+        lst[i] = endY;
+    }
+    console.log("We've inserted the safeZone now: ", lst);
+    // INSERT THOSE INTO LIST SOMEHOW?? 
+        // AND THEN CHECK WHEN RECURSING TO BE SURE THAT THE LIST THERE ISN'T ALREADY FULL
+        // HAVE A DIFFERENT CHECK TO MAKE SURE YOU HAVEN'T RECURSED TOO MANY TIMES
+
 
     let api = {
         get color() { return spec.color; },
@@ -26,7 +45,8 @@ MyGame.objects.terrain = function(spec) {
         get s() { return spec.s; },
         get rg() { return spec.rg; },
         get safeZoneDistance() { return spec.safeZoneDistance; },
-        // get startHeight() { return spec.startHeight; },
+        get canvasHeight() { return spec.canvasHeight; },
+        get canvasWidth() { return spec.canvasWidth; },
         get lst() { return spec.lst; }
     };
 

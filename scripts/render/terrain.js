@@ -8,7 +8,8 @@
 //    s: int,                   // surface-roughness factor
 //    rg: int,                  // Gaussian random number
 //    safeZoneDistance: int,    // how long the safe zone is
-//    startHeight: int,         // y value for starting point
+//    canvasHeight: int,
+//    canvasWidth: int,
 //    lst: []
 // }
 //
