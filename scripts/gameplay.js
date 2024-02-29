@@ -33,9 +33,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         s: 3,
         rg: 4,
         safeZoneDistance: 1,
-        startHeight: graphics.canvas.height / 2,
-        // segmentWidth: graphics.canvas.width / iterations + 1, // TODO: CHANGE THIS VALUE, CALCULATE IT WHEN YOU MAKE THE LIST??
-        lst: [0, 30, 50, 200, -40, 0]
+        startHeight: graphics.canvas.height / 2, // generate this automatically??
+        lst: [200, 30, 50, 200, -40, 500]
     });
 
     function processInput(elapsedTime) {

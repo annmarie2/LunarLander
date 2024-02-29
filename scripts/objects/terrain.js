@@ -9,7 +9,6 @@
 //    rg: int,                  // Gaussian random number
 //    safeZoneDistance: int,    // how long the safe zone is
 //    startHeight: int,         // y value for starting point
-//    segmentWidth: int,        // how wide each segment in the terrain is
 //    lst: []
 // }
 //
@@ -18,7 +17,7 @@ MyGame.objects.terrain = function(spec) {
     'use strict';
 
     // create lst
-    // let lst = [];
+    let lst = [];
     // fill lst recursively :))
 
     let api = {
@@ -27,8 +26,7 @@ MyGame.objects.terrain = function(spec) {
         get s() { return spec.s; },
         get rg() { return spec.rg; },
         get safeZoneDistance() { return spec.safeZoneDistance; },
-        get startHeight() { return spec.startHeight; },
-        // segmentWidth() { return spec.startWidth; },
+        // get startHeight() { return spec.startHeight; },
         get lst() { return spec.lst; }
     };
 
