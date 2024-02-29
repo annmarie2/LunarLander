@@ -32,7 +32,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         iterations: 4,
         s: 10,
         // rg: 4,
-        safeZoneDistance: 2,
+        safeZoneDistance: 4,
         canvasHeight: graphics.canvas.height,
         canvasWidth: graphics.canvas.width
         // lst: [200, 30, 50, 200, -40, 500]
