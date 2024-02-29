@@ -57,12 +57,30 @@ MyGame.graphics = (function() {
         context.restore();
     }
 
+    function drawTerrain(startHeight, color, iterations, lst) {
+        // TODO: MAKE BACKGROUND COLOR MATCH, 
+        let segmentWidth = canvas.width / (lst.length - 1);
+
+        context.save();
+        context.moveTo(0, startHeight);
+        
+        for (let i = 1; i < lst.length; i++) {
+            console.log("i * segmentWidth:", i * segmentWidth);
+            console.log("lst[i]:", lst[i])
+            context.lineTo(i * segmentWidth, startHeight + lst[i]);
+        }
+
+        context.stroke();
+        context.restore();
+    }
+
     let api = {
         get canvas() { return canvas; },
         clear: clear,
         drawTexture: drawTexture,
         drawText: drawText,
-        drawImage: drawImage
+        drawImage: drawImage,
+        drawTerrain: drawTerrain
     };
 
     return api;

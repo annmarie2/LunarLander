@@ -27,6 +27,17 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         moveRate: 500 / 1000    // pixels per millisecond
     });
 
+    let myTerrain = objects.terrain({
+        color: "grey",
+        iterations: 1,
+        s: 3,
+        rg: 4,
+        safeZoneDistance: 1,
+        startHeight: graphics.canvas.height / 2,
+        // segmentWidth: graphics.canvas.width / iterations + 1, // TODO: CHANGE THIS VALUE, CALCULATE IT WHEN YOU MAKE THE LIST??
+        lst: [0, 30, 50, 200, -40, 0]
+    });
+
     function processInput(elapsedTime) {
         myKeyboard.update(elapsedTime);
     }
@@ -39,6 +50,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         graphics.clear();
 
         renderer.Background.render(myBackground); // ADDED THIS!!
+        renderer.Terrain.render(myTerrain);
         renderer.Lander.render(myLander);
         renderer.Text.render(myText);
     }
