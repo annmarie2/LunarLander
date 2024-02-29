@@ -58,6 +58,7 @@ MyGame.graphics = (function() {
     }
 
     function drawTerrain(color, iterations, lst) {
+        context.strokeStyle = "white";
         // TODO: MAKE BACKGROUND COLOR MATCH, 
         let segmentWidth = canvas.width / (lst.length - 1);
 

@@ -29,13 +29,13 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
     let myTerrain = objects.terrain({
         color: "grey",
-        iterations: 1,
-        s: 3,
-        rg: 4,
+        iterations: 4,
+        s: 10,
+        // rg: 4,
         safeZoneDistance: 2,
         canvasHeight: graphics.canvas.height,
-        canvasWidth: graphics.canvas.width,
-        lst: [200, 30, 50, 200, -40, 500]
+        canvasWidth: graphics.canvas.width
+        // lst: [200, 30, 50, 200, -40, 500]
     });
 
     function processInput(elapsedTime) {
