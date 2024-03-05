@@ -33,11 +33,12 @@ MyGame.objects.terrain = function(spec) {
     let numPoints = Math.pow(2, spec.iterations) + 1;
     // console.log("numPoints: ", numPoints);
     let lst = new Array(numPoints);
+    console.log("first initialized list: ", lst);
     // console.log("fresh length: ", lst.length);
 
     // add endpoints, randomly choose their elevations:
-    let startY = Math.floor(Math.random() * spec.canvasHeight);
-    let endY = Math.floor(Math.random() * spec.canvasHeight);
+    let startY = Math.floor(Math.random() * spec.canvasHeight / 2) + (spec.canvasHeight * .4);
+    let endY = Math.floor(Math.random() * spec.canvasHeight / 2) + (spec.canvasHeight * .4);
     lst[0] = startY;
     lst[lst.length - 1] = endY;
     
@@ -50,25 +51,31 @@ MyGame.objects.terrain = function(spec) {
         safeZoneStartX -= Math.floor(lst.length * .15);
     }
 
-    let safeZoneStartY = Math.floor(Math.random() * spec.canvasHeight);
+    let safeZoneStartY = Math.floor(Math.random() * (spec.canvasHeight / 2)) + (spec.canvasHeight * .4);
     for (let i = safeZoneStartX; i < safeZoneStartX + spec.safeZoneDistance; i++) {
         lst[i] = safeZoneStartY;
     }
-    console.log("safeZoneStartX: ", safeZoneStartX);
-    console.log("safeZoneStartY: ", safeZoneStartY);
+    console.log("safeZone: ", safeZoneStartX, safeZoneStartY);
 
     let middleIndex = Math.floor(lst.length / 2);
-    console.log("list.length: ", lst.length);
-    console.log("middleIndex: ", middleIndex);
+    console.log("starting list: ", lst);
+
     generateTerrain(middleIndex, spec.iterations, lst);
 
     // TODO: BE SURE YOU'RE DOING RG CORRECTLY :)))
     // TODO: CONSIDER CHANGING THE VALUE OF S AT EACH LEVEL OF REFINEMENT
     function computeElevation(ax, bx, ay, by, s, rg) {
-        console.log(ax, bx, ay, by, s, rg);
+        // console.log(ax, bx, ay, by, s, rg);
         let r = s * rg * Math.abs(bx - ax);
         let midpoint = .5 * (ay + by) + r;
-        // console.log("midpoint: ", midpoint);
+        if (midpoint < 0) {
+            console.log("midpoint was less than 0...", midpoint);
+            midpoint = 20;
+        } else if (midpoint > spec.canvasHeight) {
+            console.log("midpoint was greater than canvasHeight...", midpoint, " ,", spec.canvasHeight);
+            midpoint = spec.canvasHeight;
+        }
+        console.log("midpoint: ", midpoint);
         return midpoint;
     }
 
@@ -77,13 +84,12 @@ MyGame.objects.terrain = function(spec) {
         if (lst[idx] === undefined) {
             // let ax = idx - Math.pow(2, iterations - 2);
             // let bx = idx + Math.pow(2, iterations - 2);
-            console.log("iterations: ", iterations);
-            console.log("idx: ", idx);
             let ax = idx - Math.pow(2, iterations - 1);
             let ay = lst[ax];
             let bx = idx + Math.pow(2, iterations - 1);
             let by = lst[bx];
             lst[idx] = computeElevation(ax, bx, ay, by, spec.s, rg); // TODO: THIS MIGHT NEED THE ACTUAL X VALUE, NOT JUST THE INDEX!!
+            console.log("lst[idx] is: ", lst[idx]);
         }
         if (iterations - 1 > 0) {
             let lowerHalfIdx = idx - Math.pow(2, iterations - 2);
@@ -92,8 +98,6 @@ MyGame.objects.terrain = function(spec) {
             generateTerrain(lowerHalfIdx, iterations - 1, lst);
             generateTerrain(upperHalfIdx, iterations - 1, lst);
         }
-
-        console.log("finished lst is: ", lst);
     }
     
     // INSERT THOSE INTO LIST SOMEHOW?? 
