@@ -29,9 +29,9 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
     let myTerrain = objects.terrain({
         color: "grey",
-        iterations: 9,
-        s: .5,
-        safeZoneDistance: 4,
+        iterations: 8,
+        s: 1.5,
+        safeZoneDistance: 40,
         canvasHeight: graphics.canvas.height,
         canvasWidth: graphics.canvas.width
     });

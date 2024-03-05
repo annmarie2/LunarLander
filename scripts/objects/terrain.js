@@ -67,38 +67,30 @@ MyGame.objects.terrain = function(spec) {
     // TODO: CONSIDER CHANGING THE VALUE OF S AT EACH LEVEL OF REFINEMENT
     function computeElevation(ax, bx, ay, by, s) {
         let rg = generateGaussianRandom();
-        // console.log("numbers for computeElevation are: ", ax, bx, ay, by, s, rg);
         let r = s * rg * (bx - ax);
         let midpoint = .5 * (ay + by) + r;
-        if (midpoint < 0) {
-            // console.log("midpoint was less than 0...", midpoint);
-            midpoint = 20;
-        } else if (midpoint > spec.canvasHeight) {
-            // console.log("midpoint was greater than canvasHeight...", midpoint, " ,", spec.canvasHeight);
+        if (midpoint < (spec.canvasHeight * .4)) {
+            midpoint = (spec.canvasHeight * .4);
+        }
+        if (midpoint > spec.canvasHeight) {
             midpoint = spec.canvasHeight;
         }
-        // console.log("midpoint: ", midpoint);
         return midpoint;
     }
 
     function generateTerrain(idx, iterations, lst) {
         // only fill spot with a value if it's empty; this way the safe zones remain untouched
         if (lst[idx] === undefined) {
-            // let ax = idx - Math.pow(2, iterations - 2);
-            // let bx = idx + Math.pow(2, iterations - 2);
             let ax = idx - Math.pow(2, iterations - 1);
             let ay = lst[ax];
             let bx = idx + Math.pow(2, iterations - 1);
             let by = lst[bx];
-            lst[idx] = computeElevation(ax, bx, ay, by, spec.s); // TODO: THIS MIGHT NEED THE ACTUAL X VALUE, NOT JUST THE INDEX!!
-            // console.log("ax, ay is: ", ax, ay);
-            // console.log("bx, by is: ", bx, by);            
-            // console.log("lst[idx] is: ", lst[idx]);
+            lst[idx] = computeElevation(ax, bx, ay, by, spec.s);
         }
         if (iterations - 1 > 0) {
             let lowerHalfIdx = idx - Math.pow(2, iterations - 2);
             let upperHalfIdx = idx + Math.pow(2, iterations - 2);
-            // spec.s += 1;
+            spec.s -= 0.01;
             generateTerrain(lowerHalfIdx, iterations - 1, lst);
             generateTerrain(upperHalfIdx, iterations - 1, lst);
         }
@@ -112,7 +104,7 @@ MyGame.objects.terrain = function(spec) {
         let lst = new Array(numPoints);
 
         addEndpoints(lst);
-        // addSafeZone(lst);
+        addSafeZone(lst);
 
         let middleIndex = Math.floor(lst.length / 2);
         console.log("starting list: ", lst);
