@@ -88,6 +88,7 @@ MyGame.objects.terrain = function(spec) {
         if (iterations - 1 > 0) {
             let lowerHalfIdx = idx - Math.pow(2, iterations - 2);
             let upperHalfIdx = idx + Math.pow(2, iterations - 2);
+            // spec.s += 1;
             generateTerrain(lowerHalfIdx, iterations - 1, lst);
             generateTerrain(upperHalfIdx, iterations - 1, lst);
         }
