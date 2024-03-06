@@ -6,7 +6,6 @@
 //    color: "",
 //    iterations: int,          // number of times to recurse
 //    s: int,                   // surface-roughness factor
-//    rg: int,                  // Gaussian random number
 //    safeZoneDistance: int,    // how long the safe zone is
 //    canvasHeight: int,
 //    canvasWidth: int,
@@ -44,14 +43,15 @@ MyGame.objects.terrain = function(spec) {
     }
 
     function addSafeZone(lst) {
+        let segmentWidth = spec.canvasWidth / (lst.length - 1);
         let safeZoneStartX = Math.floor(Math.random() * lst.length);
         
         // ENSURE THE SAFE ZONE IS AT LEAST 15% AWAY FROM THE BORDERS
-        if ((safeZoneStartX + spec.safeZoneDistance) < ((lst.length - 1) * .15)) {
-            safeZoneStartX += Math.floor(lst.length * .15);
+        if ((safeZoneStartX * segmentWidth) < (spec.canvasWidth * .15)) {
+            safeZoneStartX = Math.floor((spec.canvasWidth * .15) / segmentWidth);
         } 
-        else if ((safeZoneStartX + spec.safeZoneDistance) > (lst.length - 1) + ((lst.length - 1) * .15)) {
-            safeZoneStartX -= Math.floor(lst.length * .15);
+        else if ((safeZoneStartX * segmentWidth + (spec.safeZoneDistance * segmentWidth)) > (spec.canvasWidth - spec.canvasWidth * .15)) {
+            safeZoneStartX = Math.floor((spec.canvasWidth - spec.canvasWidth * 0.15 - segmentWidth * spec.safeZoneDistance) / segmentWidth)
         }
     
         // ensure the height of the safe zone isn't more than a little over halfway up the screen
@@ -63,8 +63,6 @@ MyGame.objects.terrain = function(spec) {
         }
     }
 
-    // TODO: BE SURE YOU'RE DOING RG CORRECTLY :)))
-    // TODO: CONSIDER CHANGING THE VALUE OF S AT EACH LEVEL OF REFINEMENT
     function computeElevation(ax, bx, ay, by, s) {
         let rg = generateGaussianRandom();
         let r = s * rg * (bx - ax);

@@ -58,19 +58,47 @@ MyGame.graphics = (function() {
     }
 
     function drawTerrain(color, iterations, lst) {
-        context.strokeStyle = "white";
+        // context.strokeStyle = "white";
         // TODO: MAKE BACKGROUND COLOR MATCH, 
         let segmentWidth = canvas.width / (lst.length - 1);
 
         context.save();
+
+        let region = new Path2D();
+
+        // Create path
+        region.moveTo(0, lst[0]);
+        for (let i = 1; i < lst.length; i++) {
+            region.lineTo(i * segmentWidth, lst[i]);
+        }
+        region.lineTo(canvas.width, canvas.height);
+        region.lineTo(0, canvas.height);
+        region.lineTo(0, lst[0]);
+
+        // Create fill gradient
+        const grd = context.createLinearGradient(canvas.width / 2, 0, canvas.width / 2, canvas.height);
+        // const grd = context.createRadialGradient(canvas.width / 4, canvas.height / 4, canvas.width / 8, canvas.width / 2, canvas.height / 2, canvas.width / 4);
+        // grd.addColorStop(0, "#dbdad5");f2edd3 f5f4ed 907b7e
+        grd.addColorStop(0, "#ae828f");
+        grd.addColorStop(1, "#352122");
+        // grd.addColorStop(1, "#a6a186");a6a186 82817e 61605e 352122
+
+        // Fill the terrain
+        context.fillStyle = grd;
+        context.fill(region);
+
+        context.restore();
+
+        context.save();
         context.moveTo(0, lst[0]);
         
+        // highlight the top of the terrain b0989f
+        context.strokeStyle = "#907b7e";
         for (let i = 1; i < lst.length; i++) {
             context.lineTo(i * segmentWidth, lst[i]);
         }
-
         context.stroke();
-        context.restore();
+        context.restore;
     }
 
     let api = {
