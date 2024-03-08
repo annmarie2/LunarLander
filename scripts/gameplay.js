@@ -28,7 +28,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     });
 
     let myTerrain = objects.terrain({
-        color: "grey",
+        // color: "grey",
         iterations: 8,
         s: 1.5,
         safeZoneDistance: 40,
@@ -41,7 +41,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     }
 
     function update() {
-        // myLander.updateRotation(Math.PI / 150);   // Uh, oh, fixed per frame!!
+        myLander.updateRotation(Math.PI / 150);   // Uh, oh, fixed per frame!!
     }
 
     function render() {
@@ -49,7 +49,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
         renderer.Background.render(myBackground); // ADDED THIS!!
         renderer.Terrain.render(myTerrain);
-        // renderer.Lander.render(myLander);
+        renderer.Lander.render(myLander);
         renderer.Text.render(myText);
     }
 

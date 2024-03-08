@@ -58,8 +58,19 @@ MyGame.graphics = (function() {
     }
 
     function drawTerrain(color, iterations, lst) {
+        let lstLen = lst.length - 1;
         // context.strokeStyle = "white";
         // TODO: MAKE BACKGROUND COLOR MATCH, 
+
+        // var x = 50;    // X-coordinate of the top-left corner
+        // var y = 50;    // Y-coordinate of the top-left corner
+        // var width = 200; // Width of the rectangle
+        // var height = 100; // Height of the rectangle
+    
+        // // Draw the rectangle
+        // context.fillRect(x, y, width, height);
+    
+
         let segmentWidth = canvas.width / (lst.length - 1);
 
         context.save();
@@ -77,10 +88,8 @@ MyGame.graphics = (function() {
 
         // Create fill gradient
         const grd = context.createLinearGradient(canvas.width / 2, canvas.height * .40, canvas.width / 2, canvas.height);
-        // grd.addColorStop(0, "#dbdad5");f2edd3 f5f4ed 907b7e ae828f bb5e66
         grd.addColorStop(0, "#bb5e66");
         grd.addColorStop(1, "#352122");
-        // grd.addColorStop(1, "#a6a186");a6a186 82817e 61605e 352122 574446
 
         // Fill the terrain
         context.fillStyle = grd;
