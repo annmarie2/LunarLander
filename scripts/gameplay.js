@@ -13,7 +13,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     });
 
     let myText = objects.Text({
-        text: 'This is a test',
+        text: 'boom!',
         font: '32pt Arial',
         fillStyle: 'rgba(255, 0, 0, 1)',
         strokeStyle: 'rgba(0, 0, 0, 1)',
@@ -22,13 +22,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
     let myLander = objects.Lander({
         imageSrc: 'assets/lander.png',
-        center: { x: graphics.canvas.width / 2, y: graphics.canvas.height / 2 },
-        size: { width: 100, height: 100 },
+        center: { x: 50, y: 50 },
+        size: { width: 35, height: 35 },
         moveRate: 500 / 1000    // pixels per millisecond
     });
 
     let myTerrain = objects.terrain({
-        // color: "grey",
         iterations: 8,
         s: 1.5,
         safeZoneDistance: 40,
@@ -41,7 +40,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     }
 
     function update() {
-        myLander.updateRotation(Math.PI / 150);   // Uh, oh, fixed per frame!!
+        // myLander.updateRotation(Math.PI / 150);   // Uh, oh, fixed per frame!!
     }
 
     function render() {
@@ -50,7 +49,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         renderer.Background.render(myBackground); // ADDED THIS!!
         renderer.Terrain.render(myTerrain);
         renderer.Lander.render(myLander);
-        renderer.Text.render(myText);
+        // renderer.Text.render(myText);
     }
 
     function gameLoop(time) {

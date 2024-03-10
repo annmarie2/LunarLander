@@ -57,19 +57,8 @@ MyGame.graphics = (function() {
         context.restore();
     }
 
-    function drawTerrain(color, iterations, lst) {
-        let lstLen = lst.length - 1;
-        // context.strokeStyle = "white";
-        // TODO: MAKE BACKGROUND COLOR MATCH, 
-
-        // var x = 50;    // X-coordinate of the top-left corner
-        // var y = 50;    // Y-coordinate of the top-left corner
-        // var width = 200; // Width of the rectangle
-        // var height = 100; // Height of the rectangle
-    
-        // // Draw the rectangle
-        // context.fillRect(x, y, width, height);
-    
+    function drawTerrain(lst) {
+        context.strokeStyle = "#c57773";
 
         let segmentWidth = canvas.width / (lst.length - 1);
 
@@ -89,24 +78,14 @@ MyGame.graphics = (function() {
         // Create fill gradient
         const grd = context.createLinearGradient(canvas.width / 2, canvas.height * .40, canvas.width / 2, canvas.height);
         grd.addColorStop(0, "#bb5e66");
-        grd.addColorStop(1, "#352122");
+        grd.addColorStop(1, "#191929");
 
         // Fill the terrain
         context.fillStyle = grd;
         context.fill(region);
+        context.stroke(region);
 
         context.restore();
-
-        context.save();
-        context.moveTo(0, lst[0]);
-        
-        // highlight the top of the terrain b0989f 352122 c57773
-        context.strokeStyle = "#c57773";
-        for (let i = 1; i < lst.length; i++) {
-            context.lineTo(i * segmentWidth, lst[i]);
-        }
-        context.stroke();
-        context.restore;
     }
 
     let api = {

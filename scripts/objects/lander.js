@@ -12,7 +12,7 @@
 MyGame.objects.Lander = function(spec) {
     'use strict';
 
-    let rotation = 0;
+    let rotation = 90 * Math.PI / 180; // start the lander on its side
     let imageReady = false;
     let image = new Image();
 
@@ -23,6 +23,12 @@ MyGame.objects.Lander = function(spec) {
 
     function updateRotation(howMuch) {
         rotation += howMuch;
+    }
+
+    // yeh??
+    function updateCenter(x, y) {
+        center.x += x;
+        center.y += y;
     }
 
     function moveLeft(elapsedTime) {

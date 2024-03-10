@@ -3,7 +3,6 @@
 // Creates a Terrain object, with functions for managing state.
 //
 // spec = {
-//    color: "",
 //    iterations: int,          // number of times to recurse
 //    s: int,                   // surface-roughness factor
 //    safeZoneDistance: int,    // how long the safe zone is
@@ -116,7 +115,6 @@ MyGame.objects.terrain = function(spec) {
 
     let api = {
         lst: lst,
-        get color() { return spec.color; },
         get iterations() { return spec.iterations; },
         get s() { return spec.s; },
         get safeZoneDistance() { return spec.safeZoneDistance; },
