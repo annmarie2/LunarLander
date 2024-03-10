@@ -68,8 +68,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     function initialize() {
         myKeyboard.register('s', myLander.moveDown);
         myKeyboard.register('w', myLander.moveUp);
-        myKeyboard.register('a', myLander.moveLeft);
-        myKeyboard.register('d', myLander.moveRight);
+        myKeyboard.register('a', myLander.turnLeft);
+        myKeyboard.register('d', myLander.turnRight);
         myKeyboard.register('Escape', function() {
             //
             // Stop the game loop by canceling the request for the next animation frame

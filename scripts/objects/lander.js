@@ -5,7 +5,9 @@
 // spec = {
 //    imageSrc: ,   // Web server location of the image
 //    center: { x: , y: },
-//    size: { width: , height: }
+//    size: { width: , height: },
+//    gravity: ,
+//    momentum: ,
 // }
 //
 // --------------------------------------------------------------
@@ -31,12 +33,12 @@ MyGame.objects.Lander = function(spec) {
         center.y += y;
     }
 
-    function moveLeft(elapsedTime) {
-        spec.center.x -= (spec.moveRate * elapsedTime);
+    function turnLeft(elapsedTime) {
+        rotation -= (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
     }
 
-    function moveRight(elapsedTime) {
-        spec.center.x += (spec.moveRate * elapsedTime);
+    function turnRight(elapsedTime) {
+        rotation += (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
     }
 
     function moveUp(elapsedTime) {
@@ -54,8 +56,8 @@ MyGame.objects.Lander = function(spec) {
 
     let api = {
         updateRotation: updateRotation,
-        moveLeft: moveLeft,
-        moveRight: moveRight,
+        turnLeft: turnLeft,
+        turnRight: turnRight,
         moveUp: moveUp,
         moveDown: moveDown,
         moveTo: moveTo,
