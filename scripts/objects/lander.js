@@ -6,8 +6,9 @@
 //    imageSrc: ,   // Web server location of the image
 //    center: { x: , y: },
 //    size: { width: , height: },
-//    gravity: ,
-//    momentum: ,
+//    gravity: { x: , y: },
+//    momentum: { x: , y: },
+//    orientation: { x: , y: },
 // }
 //
 // --------------------------------------------------------------
@@ -15,6 +16,10 @@ MyGame.objects.Lander = function(spec) {
     'use strict';
 
     let rotation = 90 * Math.PI / 180; // start the lander on its side
+    let gravity = { x: 0, y: 0.01 };
+    let momentum = {x: 1.0, y: 0 };
+    let thrust = { x: 0, y: 0 };
+    let orientation = { x: 1, y: 0};
     let imageReady = false;
     let image = new Image();
 
@@ -28,21 +33,72 @@ MyGame.objects.Lander = function(spec) {
     }
 
     // yeh??
-    function updateCenter(x, y) {
-        center.x += x;
-        center.y += y;
+    function updateMomentum() {
+        // add them all together babyyyyyy
+        momentum.x += gravity.x;
+        momentum.x += thrust.x;
+
+        momentum.y += gravity.y;
+        momentum.y += thrust.y;
+    }
+
+    function updatePosition() {
+        spec.center.x += momentum.x;
+        spec.center.y += momentum.y;
+    }
+
+    function update() {
+        updateMomentum();
+        updatePosition();
+    }
+
+    function updateOrientation() {
+        if (rotation > 0 && rotation < Math.PI) {
+            orientation.x = 1;
+        } else {
+            orientation.x = -1;
+        }
+
+        if (rotation > 90 * Math.PI / 180 && rotation < 270 * Math.PI / 180) {
+            orientation.y = -1;
+        } else {
+            orientation.y = 1;
+        }
     }
 
     function turnLeft(elapsedTime) {
         rotation -= (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
+        rotation %= 360 * Math.PI / 180;
+
+        updateOrientation();
     }
 
     function turnRight(elapsedTime) {
         rotation += (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
+        rotation %= 360 * Math.PI / 180;
+
+        updateOrientation();
     }
 
+    // TODO: Update based on elapsedTime? :))
     function moveUp(elapsedTime) {
-        spec.center.y -= (spec.moveRate * elapsedTime);
+        // spec.center.x += ;
+        console.log("orientation.x: ", orientation.x);
+        if (orientation.x > 0) {
+            momentum.x += 0.04;
+        } 
+        else if (orientation.x < 0) {
+            momentum.x -= 0.04;
+        }
+
+        console.log("orientation.y: ", orientation.y);
+        if (orientation.y > 0) {
+            momentum.y -= 0.04;
+        }
+        else if (orientation.y < 0) {
+            momentum.y += 0.04;
+        }
+        // spec.center.y -= (spec.moveRate * elapsedTime);
     }
 
     function moveDown(elapsedTime) {
@@ -56,6 +112,7 @@ MyGame.objects.Lander = function(spec) {
 
     let api = {
         updateRotation: updateRotation,
+        update: update,
         turnLeft: turnLeft,
         turnRight: turnRight,
         moveUp: moveUp,
@@ -63,6 +120,10 @@ MyGame.objects.Lander = function(spec) {
         moveTo: moveTo,
         get imageReady() { return imageReady; },
         get rotation() { return rotation; },
+        get gravity() { return gravity; },
+        get momentum() { return momentum; },
+        get orientation() { return orientation; },
+        get thrust() { return thrust; },
         get image() { return image; },
         get center() { return spec.center; },
         get size() { return spec.size; }

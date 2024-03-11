@@ -41,6 +41,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
     function update() {
         // myLander.updateRotation(Math.PI / 150);   // Uh, oh, fixed per frame!!
+        myLander.update();
     }
 
     function render() {
