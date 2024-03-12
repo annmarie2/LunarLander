@@ -20,6 +20,7 @@ MyGame.objects.Lander = function(spec) {
     let momentum = {x: 1.0, y: 0 };
     let thrust = { x: 0, y: 0 };
     let orientation = { x: 1, y: 0};
+    let fuel = 20;
     let imageReady = false;
     let image = new Image();
 
@@ -92,20 +93,23 @@ MyGame.objects.Lander = function(spec) {
         }
     }
 
-    // TODO: Update based on elapsedTime? :))
     function moveUp(elapsedTime) {
-        if (orientation.x > 0) {
-            momentum.x += 0.005 * elapsedTime;
-        } 
-        else if (orientation.x < 0) {
-            momentum.x -= 0.005 * elapsedTime;
-        }
-
-        if (orientation.y > 0) {
-            momentum.y -= 0.005 * elapsedTime;
-        }
-        else if (orientation.y < 0) {
-            momentum.y += 0.005 * elapsedTime;
+        if (fuel > 0) {
+            if (orientation.x > 0) {
+                momentum.x += 0.005 * elapsedTime;
+            } 
+            else if (orientation.x < 0) {
+                momentum.x -= 0.005 * elapsedTime;
+            }
+    
+            if (orientation.y > 0) {
+                momentum.y -= 0.005 * elapsedTime;
+            }
+            else if (orientation.y < 0) {
+                momentum.y += 0.005 * elapsedTime;
+            }
+    
+            fuel -= .1;
         }
     }
 
@@ -127,6 +131,7 @@ MyGame.objects.Lander = function(spec) {
         get momentum() { return momentum; },
         get orientation() { return orientation; },
         get thrust() { return thrust; },
+        get fuel() { return fuel; },
         get image() { return image; },
         get center() { return spec.center; },
         get size() { return spec.size; }

@@ -104,7 +104,6 @@ MyGame.objects.terrain = function(spec) {
         addSafeZone(lst);
 
         let middleIndex = Math.floor(lst.length / 2);
-        console.log("starting list: ", lst);
     
         generateTerrain(middleIndex, spec.iterations, lst);
 

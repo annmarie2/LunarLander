@@ -12,19 +12,25 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         size: { width: graphics.canvas.width, height: graphics.canvas.height }
     });
 
-    let myText = objects.Text({
-        text: 'boom!',
-        font: '32pt Arial',
-        fillStyle: 'rgba(255, 0, 0, 1)',
-        strokeStyle: 'rgba(0, 0, 0, 1)',
-        position: { x: 50, y: 100 }
-    });
-
     let myLander = objects.Lander({
         imageSrc: 'assets/lander.png',
         center: { x: 50, y: 50 },
         size: { width: 35, height: 35 },
         moveRate: 500 / 1000    // pixels per millisecond
+    });
+
+    let fuelText = objects.Text({
+        text: "fuel: " + String(myLander.fuel),
+        font: '16pt Arial',
+        fillStyle: 'rgba(0, 255, 0, 1)',
+        strokeStyle: 'rgba(0, 0, 0, 1)',
+        position: { x: 100, y: 100 }
+        // position: { x: graphics.canvas.width + graphics.canvas.width / 20, y: graphics.canvas.width / 2 }
+    });
+
+    let verticalSpeedText = objects.Text({
+        text: String(myLander.momentum.x),
+
     });
 
     let myTerrain = objects.terrain({
@@ -40,17 +46,17 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     }
 
     function update() {
-        // myLander.updateRotation(Math.PI / 150);   // Uh, oh, fixed per frame!!
         myLander.update();
+        fuelText.update(myLander.fuel);
     }
 
     function render() {
         graphics.clear();
 
-        renderer.Background.render(myBackground); // ADDED THIS!!
+        renderer.Background.render(myBackground);
         renderer.Terrain.render(myTerrain);
         renderer.Lander.render(myLander);
-        // renderer.Text.render(myText);
+        renderer.Text.render(fuelText);
     }
 
     function gameLoop(time) {

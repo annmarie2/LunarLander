@@ -16,12 +16,18 @@ MyGame.objects.Text = function(spec) {
 
     let rotation = 0;
 
-    function updateRotation(howMuch) {
-        rotation += howMuch;
+    function update(fuelCount) {
+        if (fuelCount > 0) {
+            spec.text = "fuel: " + fuelCount.toFixed(2);
+        }
+        else {
+            spec.text = "fuel: 0.00";
+            spec.fillStyle = 'rgba(255, 255, 255, 1)';
+        }
     }
 
     let api = {
-        updateRotation: updateRotation,
+        update: update,
         get rotation() { return rotation; },
         get position() { return spec.position; },
         get text() { return spec.text; },
