@@ -36,6 +36,14 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         position: { x: 100, y: 150 }
     });
 
+    let angleText = objects.Text({
+        text: "angle: " + String(myLander.angle),
+        font: '16pt Arial',
+        fillStyle: 'rgba(0, 255, 0, 1)',
+        strokeStyle: 'rgba(0, 0, 0, 1)',
+        position: { x: 100, y: 200 }    
+    });
+
     let myTerrain = objects.terrain({
         iterations: 8,
         s: 1.5,
@@ -52,6 +60,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         myLander.update();
         fuelText.updateFuel(myLander.fuel);
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
+        angleText.updateAngle(myLander.angle());
     }
 
     function render() {
@@ -62,6 +71,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         renderer.Lander.render(myLander);
         renderer.Text.render(fuelText);
         renderer.Text.render(verticalSpeedText);
+        renderer.Text.render(angleText);
     }
 
     function gameLoop(time) {

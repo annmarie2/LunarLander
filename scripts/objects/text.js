@@ -36,9 +36,20 @@ MyGame.objects.Text = function(spec) {
         }
     }
 
+    function updateAngle(angle) {
+        if (angle > 10 * Math.PI / 180) {
+            spec.text = "angle: " + angle.toFixed(2);
+            spec.fillStyle = 'rgba(255, 255, 255, 1)';
+        } else {
+            spec.text = "angle: " + angle.toFixed(2);
+            spec.fillStyle = 'rgba(0, 255, 0, 1)';
+        }
+    }
+
     let api = {
         updateFuel: updateFuel,
         updateVerticalSpeed: updateVerticalSpeed,
+        updateAngle: updateAngle,
         get rotation() { return rotation; },
         get position() { return spec.position; },
         get text() { return spec.text; },

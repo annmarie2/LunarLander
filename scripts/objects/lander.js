@@ -95,17 +95,17 @@ MyGame.objects.Lander = function(spec) {
     function moveUp(elapsedTime) {
         if (fuel > 0) {
             if (orientation.x > 0) {
-                momentum.x += 0.005 * elapsedTime;
+                momentum.x += 0.003 * elapsedTime;
             } 
             else if (orientation.x < 0) {
-                momentum.x -= 0.005 * elapsedTime;
+                momentum.x -= 0.003 * elapsedTime;
             }
     
             if (orientation.y > 0) {
-                momentum.y -= 0.005 * elapsedTime;
+                momentum.y -= 0.003 * elapsedTime;
             }
             else if (orientation.y < 0) {
-                momentum.y += 0.005 * elapsedTime;
+                momentum.y += 0.003 * elapsedTime;
             }
     
             fuel -= .1;
@@ -121,9 +121,18 @@ MyGame.objects.Lander = function(spec) {
         return Math.abs(momentum.y * 3);  // 3 because we need some arbitrary conversion to m/s
     }
 
+    function angle() {
+        if (rotation > Math.PI) {
+            return Math.abs((360 * Math.PI / 180) - rotation);
+        } else {
+            return rotation;
+        }
+    }
+
     let api = {
         updateRotation: updateRotation,
         verticalSpeed: verticalSpeed,
+        angle: angle,
         update: update,
         turnLeft: turnLeft,
         turnRight: turnRight,
