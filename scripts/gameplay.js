@@ -29,8 +29,11 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     });
 
     let verticalSpeedText = objects.Text({
-        text: String(myLander.momentum.x),
-
+        text: "vertical speed: " + String(myLander.momentum.x) + " m/s",
+        font: '16pt Arial',
+        fillStyle: 'rgba(0, 255, 0, 1)',
+        strokeStyle: 'rgba(0, 0, 0, 1)',
+        position: { x: 100, y: 150 }
     });
 
     let myTerrain = objects.terrain({
@@ -47,7 +50,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
     function update() {
         myLander.update();
-        fuelText.update(myLander.fuel);
+        fuelText.updateFuel(myLander.fuel);
+        verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
     }
 
     function render() {
@@ -57,6 +61,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         renderer.Terrain.render(myTerrain);
         renderer.Lander.render(myLander);
         renderer.Text.render(fuelText);
+        renderer.Text.render(verticalSpeedText);
     }
 
     function gameLoop(time) {
@@ -64,7 +69,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         lastTimeStamp = time;
 
         processInput(elapsedTime);
-        update();
+        update(elapsedTime);
         render();
 
         if (!cancelNextRequest) {

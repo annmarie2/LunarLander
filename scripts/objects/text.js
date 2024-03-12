@@ -16,7 +16,7 @@ MyGame.objects.Text = function(spec) {
 
     let rotation = 0;
 
-    function update(fuelCount) {
+    function updateFuel(fuelCount) {
         if (fuelCount > 0) {
             spec.text = "fuel: " + fuelCount.toFixed(2);
         }
@@ -26,8 +26,19 @@ MyGame.objects.Text = function(spec) {
         }
     }
 
+    function updateVerticalSpeed(vertSpeed) {
+        if (vertSpeed > 2) {
+            spec.text = "vertical speed: " + vertSpeed.toFixed(2) + " m/s";
+            spec.fillStyle = 'rgba(255, 255, 255, 1)';
+        } else {
+            spec.text = "vertical speed: " + vertSpeed.toFixed(2) + " m/s";
+            spec.fillStyle = 'rgba(0, 255, 0, 1)';
+        }
+    }
+
     let api = {
-        update: update,
+        updateFuel: updateFuel,
+        updateVerticalSpeed: updateVerticalSpeed,
         get rotation() { return rotation; },
         get position() { return spec.position; },
         get text() { return spec.text; },

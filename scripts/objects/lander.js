@@ -33,7 +33,6 @@ MyGame.objects.Lander = function(spec) {
         rotation += howMuch;
     }
 
-    // yeh??
     function updateMomentum() {
         // add them all together babyyyyyy
         momentum.x += gravity.x;
@@ -78,7 +77,7 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function turnLeft(elapsedTime) {
-        rotation -= (Math.PI / 1000) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
+        rotation -= (Math.PI / 1000) * elapsedTime;  // 1000 because that's a good arbitrary number for slow turns
         rotation %= 360 * Math.PI / 180;
         if (rotation < 0) {
             rotation = 360 * Math.PI / 180 + rotation;
@@ -86,7 +85,7 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function turnRight(elapsedTime) {
-        rotation += (Math.PI / 1000) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
+        rotation += (Math.PI / 1000) * elapsedTime;  // 1000 because that's a good arbitrary number for slow turns
         rotation %= 360 * Math.PI / 180;
         if (rotation < 0) {
             rotation = 360 * Math.PI / 180 + rotation;
@@ -118,8 +117,13 @@ MyGame.objects.Lander = function(spec) {
         spec.center.y = pos.y;
     }
 
+    function verticalSpeed() {
+        return Math.abs(momentum.y * 3);  // 3 because we need some arbitrary conversion to m/s
+    }
+
     let api = {
         updateRotation: updateRotation,
+        verticalSpeed: verticalSpeed,
         update: update,
         turnLeft: turnLeft,
         turnRight: turnRight,
