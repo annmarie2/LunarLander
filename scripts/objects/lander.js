@@ -50,40 +50,52 @@ MyGame.objects.Lander = function(spec) {
     function update() {
         updateMomentum();
         updatePosition();
+        updateOrientation();
     }
 
     function updateOrientation() {
-        if (rotation > 0 && rotation < Math.PI) {
+
+        if (rotation > 20 * Math.PI / 180 && rotation < 160 * Math.PI / 180) {
             orientation.x = 1;
-        } else {
+        }
+        else if (rotation > 200 * Math.PI / 180 && rotation < 340 * Math.PI / 180) {
             orientation.x = -1;
         }
+        else {
+            orientation.x = 0;
+        }
 
-        if (rotation > 90 * Math.PI / 180 && rotation < 270 * Math.PI / 180) {
-            orientation.y = -1;
-        } else {
+        if ((rotation > 290 * Math.PI / 180) || (rotation < 70 * Math.PI / 180)) {
             orientation.y = 1;
+        }
+        else if (rotation > 110 * Math.PI / 180 && rotation < 250 * Math.PI / 180) {
+            orientation.y = -1;
+        }
+        else {
+            orientation.y = 0;
         }
     }
 
     function turnLeft(elapsedTime) {
         rotation -= (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
         rotation %= 360 * Math.PI / 180;
-
-        updateOrientation();
+        if (rotation < 0) {
+            rotation = 360 * Math.PI / 180 + rotation;
+        }
     }
 
     function turnRight(elapsedTime) {
         rotation += (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
         rotation %= 360 * Math.PI / 180;
-
-        updateOrientation();
+        if (rotation < 0) {
+            rotation = 360 * Math.PI / 180 + rotation;
+        }
     }
 
     // TODO: Update based on elapsedTime? :))
     function moveUp(elapsedTime) {
         // spec.center.x += ;
-        console.log("orientation.x: ", orientation.x);
+        // console.log("orientation.x: ", orientation.x);
         if (orientation.x > 0) {
             momentum.x += 0.04;
         } 
@@ -91,7 +103,7 @@ MyGame.objects.Lander = function(spec) {
             momentum.x -= 0.04;
         }
 
-        console.log("orientation.y: ", orientation.y);
+        // console.log("orientation.y: ", orientation.y);
         if (orientation.y > 0) {
             momentum.y -= 0.04;
         }
