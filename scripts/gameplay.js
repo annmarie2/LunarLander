@@ -67,7 +67,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
     }
 
     function initialize() {
-        myKeyboard.register('s', myLander.moveDown);
+        // myKeyboard.register('s', myLander.moveDown);
         myKeyboard.register('w', myLander.moveUp);
         myKeyboard.register('a', myLander.turnLeft);
         myKeyboard.register('d', myLander.turnRight);

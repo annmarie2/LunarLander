@@ -77,7 +77,7 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function turnLeft(elapsedTime) {
-        rotation -= (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
+        rotation -= (Math.PI / 1000) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
         rotation %= 360 * Math.PI / 180;
         if (rotation < 0) {
             rotation = 360 * Math.PI / 180 + rotation;
@@ -85,7 +85,7 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function turnRight(elapsedTime) {
-        rotation += (Math.PI / 800) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
+        rotation += (Math.PI / 1000) * elapsedTime;  // 800 because that's a good arbitrary number for slow turns
         rotation %= 360 * Math.PI / 180;
         if (rotation < 0) {
             rotation = 360 * Math.PI / 180 + rotation;
@@ -94,27 +94,19 @@ MyGame.objects.Lander = function(spec) {
 
     // TODO: Update based on elapsedTime? :))
     function moveUp(elapsedTime) {
-        // spec.center.x += ;
-        // console.log("orientation.x: ", orientation.x);
         if (orientation.x > 0) {
-            momentum.x += 0.04;
+            momentum.x += 0.005 * elapsedTime;
         } 
         else if (orientation.x < 0) {
-            momentum.x -= 0.04;
+            momentum.x -= 0.005 * elapsedTime;
         }
 
-        // console.log("orientation.y: ", orientation.y);
         if (orientation.y > 0) {
-            momentum.y -= 0.04;
+            momentum.y -= 0.005 * elapsedTime;
         }
         else if (orientation.y < 0) {
-            momentum.y += 0.04;
+            momentum.y += 0.005 * elapsedTime;
         }
-        // spec.center.y -= (spec.moveRate * elapsedTime);
-    }
-
-    function moveDown(elapsedTime) {
-        spec.center.y += (spec.moveRate * elapsedTime);
     }
 
     function moveTo(pos) {
@@ -128,7 +120,6 @@ MyGame.objects.Lander = function(spec) {
         turnLeft: turnLeft,
         turnRight: turnRight,
         moveUp: moveUp,
-        moveDown: moveDown,
         moveTo: moveTo,
         get imageReady() { return imageReady; },
         get rotation() { return rotation; },
