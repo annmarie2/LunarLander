@@ -26,9 +26,10 @@ MyGame.systems.ParticleSystem = function(spec) {
         //         lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
         //         alive: 0    // How long the particle has been alive, in seconds
         //     };
+        let size = Random.nextGaussian(spec.size.mean, spec.size.stdev);
         let p = {
             center: {x: spec.center.x, y: spec.center.y},
-            size: { x: spec.size.x, y: spec.size.y },
+            size: { x: size, y: size },
             direction: Random.nextCircleVector(),
             speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
             rotation: 0,
@@ -81,6 +82,8 @@ MyGame.systems.ParticleSystem = function(spec) {
         }
         removeMe.length = 0;
 
+        //
+        // If the generator hasn't run out of time to generate new particles
         if (systemLifetime > 0) {
             //
             // Generate some new particles

@@ -16,18 +16,16 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     //         systemLifetime: 500
     //     },
     //     graphics);  
-    // let renderParticles = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
-    let particles = systems.ParticleSystem({
+    // let renderFire = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
+    let particlesFire = systems.ParticleSystem({
             center: { x: 300, y: 300 },
-            size: { x: 10, y: 10 },
-            speed: { mean: 50, stdev: 25 },
-            lifetime: { mean: 4, stdev: 1 },
-            systemLifetime: 1
+            size: { mean: 10, stdev: 4 },
+            speed: { mean: 100, stdev: 25 },
+            lifetime: { mean: 2.5, stdev: 1 },
+            systemLifetime: 1.5
         },
         graphics);
-    let renderParticles = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
-
-
+    let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
 
     let myKeyboard = input.Keyboard();
 
@@ -40,7 +38,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let myLander = objects.Lander({
         imageSrc: 'assets/lander.png',
         center: { x: 50, y: 50 },
-        size: { width: 35, height: 35 },
+        size: { x: 35, y: 35 },
         moveRate: 500 / 1000    // pixels per millisecond
     });
 
@@ -86,7 +84,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         fuelText.updateFuel(myLander.fuel);
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
         angleText.updateAngle(myLander.angle());
-        particles.update(elapsedTime);
+        particlesFire.update(elapsedTime);
     }
 
     function render() {
@@ -104,7 +102,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         //     renderer.drawCircle(particles[particle]);
         //     console.log("drawing particle!!", particle);
         // }
-        renderParticles.render();
+        renderFire.render();
     }
 
     function gameLoop(time) {

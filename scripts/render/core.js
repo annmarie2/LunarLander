@@ -25,9 +25,9 @@ MyGame.graphics = (function() {
 
         context.drawImage(
             image,
-            center.x - size.width / 2,
-            center.y - size.height / 2,
-            size.width, size.height);
+            center.x - size.x / 2,
+            center.y - size.y / 2,
+            size.x, size.y);
 
         context.restore();
     }
