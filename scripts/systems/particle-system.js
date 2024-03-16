@@ -8,7 +8,7 @@ MyGame.systems.ParticleSystem = function(spec) {
     let nextName = 1;       // Unique identifier for the next particle
     let particles = {};
     let systemLifetime = spec.systemLifetime;
-    let myLander = spec.myLander;
+    // let center = { x: spec.center.x, y: spec.center.y };
 
     //------------------------------------------------------------------
     //
@@ -31,19 +31,12 @@ MyGame.systems.ParticleSystem = function(spec) {
         let p = {
             center: {x: spec.center.x, y: spec.center.y},
             size: { x: size, y: size },
-            direction: Random.nextCircleVector(2 * Math.PI, 0),
+            direction: Random.nextCircleVector(spec.direction.max, spec.direction.min),
             speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
             rotation: 0,
             lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
             alive: 0    // How long the particle has been alive, in seconds
         };
-
-        if (myLander != null) {
-            p.direction = Random.nextCircleVector(myLander.rotation + (5 * Math.PI / 180), myLander.rotation - (5 * Math.PI / 180));
-            p.center.x = myLander.center.x;
-            p.center.y = myLander.center.y;
-        }
-
 
         return p;
     }
@@ -53,7 +46,12 @@ MyGame.systems.ParticleSystem = function(spec) {
     // Update the state of all particles.  This includes removing any that have exceeded their lifetime.
     //
     //------------------------------------------------------------------
-    function update(elapsedTime) {
+    function update(updateSpec, elapsedTime) {
+        spec.center.x = updateSpec.center.x;
+        spec.center.y = updateSpec.center.y;
+        spec.direction.max = updateSpec.direction.max;
+        spec.direction.min = updateSpec.direction.min;
+
         let removeMe = [];
 
         //
@@ -73,7 +71,7 @@ MyGame.systems.ParticleSystem = function(spec) {
 
             //
             // Rotate proportional to its speed
-            if (myLander == null) {
+            if (updateSpec.rotate) {
                 particle.rotation += particle.speed / 500;
             }
 
@@ -94,7 +92,6 @@ MyGame.systems.ParticleSystem = function(spec) {
         //
         // If the generator hasn't run out of time to generate new particles
         if (systemLifetime > 0) {
-            if (myLander == null || )
             //
             // Generate some new particles
             for (let particle = 0; particle < 1; particle++) {
@@ -104,10 +101,10 @@ MyGame.systems.ParticleSystem = function(spec) {
             }
         }
 
-        if (myLander != null) {
-            systemLifetime = myLander.fuel;
-        } else {
+        if (updateSpec.systemLifetime == null) {
             systemLifetime -= elapsedTime;
+        } else {
+            systemLifetime = updateSpec.systemLifetime;
         }
     }
 

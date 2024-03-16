@@ -25,7 +25,6 @@ let Random = (function() {
         } else if (angle > maxAngle) {
             angle == maxAngle;
         }
-        console.log("angle: ", angle);
         return {
             x: Math.cos(angle),
             y: Math.sin(angle)

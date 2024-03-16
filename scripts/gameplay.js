@@ -71,7 +71,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             speed: { mean: 100, stdev: 25 },
             lifetime: { mean: 2.5, stdev: 1 },
             systemLifetime: 1.5,
-            myLander: null
+            direction: {max: 2 * Math.PI, min: 0}
         },
         graphics);
     let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
@@ -82,7 +82,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             speed: { mean: 100, stdev: 25 },
             lifetime: { mean: 2.5, stdev: 1 },
             systemLifetime: myLander.fuel,
-            myLander: myLander // this terribl form?
+            direction: { max: 2 * Math.PI, min: 0 } 
         },
         graphics);
     let renderThrust = renderer.ParticleSystem(particlesThrust, graphics, 'assets/steam.png')
@@ -98,8 +98,21 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         fuelText.updateFuel(myLander.fuel);
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
         angleText.updateAngle(myLander.angle());
-        particlesFire.update(elapsedTime);
-        particlesThrust.update(elapsedTime);
+        particlesFire.update({ 
+                center: {x: 300, y: 300}, 
+                rotate: true, 
+                systemLifetime: null, 
+                direction: { max: 2 * Math.PI, min: 0 } 
+            }, 
+            elapsedTime);
+        particlesThrust.update({ 
+                center: {x: myLander.center.x, y: myLander.center.y}, 
+                rotate: false, 
+                systemLifetime: myLander.fuel, 
+                direction: { max: myLander.rotation + (5 * Math.PI / 180), min: myLander.rotation - (5 * Math.PI / 180) } 
+            }, 
+            elapsedTime);
+        // console.log(myLander.fuel);
     }
 
     function render() {
