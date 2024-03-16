@@ -15,17 +15,27 @@ MyGame.systems.ParticleSystem = function(spec) {
     //
     //------------------------------------------------------------------
     function create() {
+        // let p = {
+        //         center: {x: spec.center.x, y: spec.center.y},
+        //         radius: spec.radius,
+        //         startAngle: spec.startAngle,
+        //         endAngle: spec.endAngle,
+        //         direction: Random.nextCircleVector(),
+        //         speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
+        //         rotation: 0,
+        //         lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
+        //         alive: 0    // How long the particle has been alive, in seconds
+        //     };
         let p = {
-                center: {x: spec.center.x, y: spec.center.y},
-                radius: spec.radius,
-                startAngle: spec.startAngle,
-                endAngle: spec.endAngle,
-                direction: Random.nextCircleVector(),
-                speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
-                rotation: 0,
-                lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
-                alive: 0    // How long the particle has been alive, in seconds
-            };
+            center: {x: spec.center.x, y: spec.center.y},
+            size: { x: spec.size.x, y: spec.size.y },
+            direction: Random.nextCircleVector(),
+            speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
+            rotation: 0,
+            lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
+            alive: 0    // How long the particle has been alive, in seconds
+        };
+
 
         return p;
     }
@@ -36,13 +46,12 @@ MyGame.systems.ParticleSystem = function(spec) {
     //
     //------------------------------------------------------------------
     function update(elapsedTime) {
-        systemLifetime -= elapsedTime;
         let removeMe = [];
 
         //
         // We work with time in seconds, elapsedTime comes in as milliseconds
         elapsedTime = elapsedTime / 1000;
-        
+
         Object.getOwnPropertyNames(particles).forEach(function(value, index, array) {
             let particle = particles[value];
             //
@@ -81,6 +90,8 @@ MyGame.systems.ParticleSystem = function(spec) {
                 particles[nextName++] = create();
             }
         }
+
+        systemLifetime -= elapsedTime;
     }
 
     let api = {

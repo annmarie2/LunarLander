@@ -22,7 +22,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             size: { x: 10, y: 10 },
             speed: { mean: 50, stdev: 25 },
             lifetime: { mean: 4, stdev: 1 },
-            systemLifetime: 500
+            systemLifetime: 1
         },
         graphics);
     let renderParticles = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
