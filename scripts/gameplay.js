@@ -71,7 +71,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             speed: { mean: 100, stdev: 25 },
             lifetime: { mean: 2.5, stdev: 1 },
             systemLifetime: 1.5,
-            direction: {max: 2 * Math.PI, min: 0}
+            direction: {max: 2 * Math.PI, min: 0},
+            generateNew: true
         },
         graphics);
     let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
@@ -82,7 +83,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             speed: { mean: 100, stdev: 25 },
             lifetime: { mean: 2.5, stdev: 1 },
             systemLifetime: myLander.fuel,
-            direction: { max: 2 * Math.PI, min: 0 } 
+            direction: { max: 2 * Math.PI, min: 0 } ,
+            generateNew: false
         },
         graphics);
     let renderThrust = renderer.ParticleSystem(particlesThrust, graphics, 'assets/steam.png');
@@ -149,7 +151,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
         myKeyboard.register('w', myLander.moveUp);
-        // myKeyboard.register('w', renderThrust.render);
+        myKeyboard.register('w', particlesThrust.toggleGenerateNew);
         myKeyboard.register('a', myLander.turnLeft);
         myKeyboard.register('d', myLander.turnRight);
         myKeyboard.register('Escape', function() {

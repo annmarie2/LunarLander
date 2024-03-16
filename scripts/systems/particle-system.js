@@ -8,6 +8,7 @@ MyGame.systems.ParticleSystem = function(spec) {
     let nextName = 1;       // Unique identifier for the next particle
     let particles = {};
     let systemLifetime = spec.systemLifetime;
+    let generateNew = spec.generateNew;
     // let center = { x: spec.center.x, y: spec.center.y };
 
     //------------------------------------------------------------------
@@ -39,6 +40,19 @@ MyGame.systems.ParticleSystem = function(spec) {
         };
 
         return p;
+    }
+
+    //------------------------------------------------------------------
+    //
+    // This changes the value of generateNew
+    //
+    //------------------------------------------------------------------
+    function toggleGenerateNew() {
+        if (generateNew) {
+            generateNew = false;
+        } else {
+            generateNew = true;
+        }
     }
 
     //------------------------------------------------------------------
@@ -90,8 +104,8 @@ MyGame.systems.ParticleSystem = function(spec) {
         removeMe.length = 0;
 
         //
-        // If the generator hasn't run out of time to generate new particles
-        if (systemLifetime > 0) {
+        // If the generator hasn't run out of time to generate new particles, and the spaceship is moving:
+        if (systemLifetime > 0 && generateNew) {
             //
             // Generate some new particles
             for (let particle = 0; particle < 1; particle++) {
@@ -106,10 +120,17 @@ MyGame.systems.ParticleSystem = function(spec) {
         } else {
             systemLifetime = updateSpec.systemLifetime;
         }
+
+        if (generateNew) {
+            generateNew = false;
+        }
+        // toggleGenerateNew();
     }
 
     let api = {
         update: update,
+        toggleGenerateNew: toggleGenerateNew,
+        get generateNew() { return generateNew; },
         get particles() { return particles; }
     };
 
