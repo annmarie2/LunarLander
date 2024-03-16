@@ -1,8 +1,22 @@
-MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input) {
+MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphics, input) {
     'use strict';
 
     let lastTimeStamp = performance.now();
     let cancelNextRequest = true;
+
+    //
+    // Define a sample particle system to demonstrate its capabilities
+    let particles = systems.ParticleSystem({
+            center: { x: 300, y: 300 },
+            radius: 10,
+            startAngle: 0,
+            endAngle: 2 * Math.PI,
+            speed: { mean: 50, stdev: 25 },
+            lifetime: { mean: 4, stdev: 1 },
+            systemLifetime: 500
+        },
+        graphics);  
+    let renderParticles = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
 
     let myKeyboard = input.Keyboard();
 
@@ -56,11 +70,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         myKeyboard.update(elapsedTime);
     }
 
-    function update() {
+    function update(elapsedTime) {
         myLander.update();
         fuelText.updateFuel(myLander.fuel);
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
         angleText.updateAngle(myLander.angle());
+        particles.update(elapsedTime);
     }
 
     function render() {
@@ -72,6 +87,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         renderer.Text.render(fuelText);
         renderer.Text.render(verticalSpeedText);
         renderer.Text.render(angleText);
+        renderParticles.render();
     }
 
     function gameLoop(time) {
@@ -115,4 +131,4 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         run : run
     };
 
-}(MyGame.game, MyGame.objects, MyGame.render, MyGame.graphics, MyGame.input));
+}(MyGame.game, MyGame.objects, MyGame.render, MyGame.systems, MyGame.graphics, MyGame.input));

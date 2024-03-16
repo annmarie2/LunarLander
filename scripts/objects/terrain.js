@@ -64,6 +64,7 @@ MyGame.objects.terrain = function(spec) {
 
     function computeElevation(ax, bx, ay, by, s) {
         let rg = generateGaussianRandom();
+        // let rg = Random.nextGaussian(0,1);
         let r = s * rg * (bx - ax);
         let midpoint = .5 * (ay + by) + r;
         if (midpoint < (spec.canvasHeight * .4)) {

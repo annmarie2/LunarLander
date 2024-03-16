@@ -88,13 +88,29 @@ MyGame.graphics = (function() {
         context.restore();
     }
 
+    function drawCircle(circ, fillStyle, strokeStyle) {
+        context.save();
+        context.translate(circ.center.x, circ.center.y );
+        context.rotate(circ.rotation);
+        context.translate(-circ.center.x, -circ.center.y);
+        
+        context.fillStyle = fillStyle;
+        // context.fillRect(circ.center.x - circ.size.x / 2, circ.center.y - circ.size.y / 2, circ.size.x, circ.size.y);
+        context.strokeStyle = strokeStyle;
+        context.arc(circ.center.x, circ.center.y, circ.radius, circ.startAngle, circ.endAngle);
+
+        // context.strokeArc(circ.center.x, circ.center.y, circ.radius, circ.startAngle, circ.endAngle);
+
+        context.restore();
+    }
     let api = {
         get canvas() { return canvas; },
         clear: clear,
         drawTexture: drawTexture,
         drawText: drawText,
         drawImage: drawImage,
-        drawTerrain: drawTerrain
+        drawTerrain: drawTerrain,
+        drawCircle: drawCircle
     };
 
     return api;
