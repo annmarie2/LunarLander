@@ -85,7 +85,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             direction: { max: 2 * Math.PI, min: 0 } 
         },
         graphics);
-    let renderThrust = renderer.ParticleSystem(particlesThrust, graphics, 'assets/steam.png')
+    let renderThrust = renderer.ParticleSystem(particlesThrust, graphics, 'assets/steam.png');
 
     
 
@@ -112,7 +112,6 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
                 direction: { max: myLander.rotation + (5 * Math.PI / 180) + (Math.PI / 2), min: myLander.rotation - (5 * Math.PI / 180) + (Math.PI / 2) } 
             }, 
             elapsedTime);
-        console.log("myLander.rotation: ", myLander.rotation);
     }
 
     function render() {
@@ -150,6 +149,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
         myKeyboard.register('w', myLander.moveUp);
+        // myKeyboard.register('w', renderThrust.render);
         myKeyboard.register('a', myLander.turnLeft);
         myKeyboard.register('d', myLander.turnRight);
         myKeyboard.register('Escape', function() {

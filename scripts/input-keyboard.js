@@ -16,14 +16,19 @@ MyGame.input.Keyboard = function () {
         for (let key in that.keys) {
             if (that.keys.hasOwnProperty(key)) {
                 if (that.handlers[key]) {
-                    that.handlers[key](elapsedTime);
+                    for (let i = 0; i < that.handlers[key].length; i++) {
+                        that.handlers[key][i](elapsedTime);
+                    }
                 }
             }
         }
     };
 
     that.register = function (key, handler) {
-        that.handlers[key] = handler;
+        if (!that.handlers[key]) {
+            that.handlers[key] = [];
+        }
+        that.handlers[key].push(handler);
     };
 
     window.addEventListener('keydown', keyPress);
