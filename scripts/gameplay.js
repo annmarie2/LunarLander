@@ -121,6 +121,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
 
         renderer.Background.render(myBackground);
         renderer.Terrain.render(myTerrain);
+        renderFire.render();
+        renderThrust.render();
         renderer.Lander.render(myLander);
         renderer.Text.render(fuelText);
         renderer.Text.render(verticalSpeedText);
@@ -131,8 +133,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         //     renderer.drawCircle(particles[particle]);
         //     console.log("drawing particle!!", particle);
         // }
-        renderFire.render();
-        renderThrust.render();
+
     }
 
     function gameLoop(time) {

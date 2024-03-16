@@ -44,15 +44,11 @@ MyGame.systems.ParticleSystem = function(spec) {
 
     //------------------------------------------------------------------
     //
-    // This changes the value of generateNew
+    // This changes the value of generateNew to true
     //
     //------------------------------------------------------------------
     function toggleGenerateNew() {
-        if (generateNew) {
-            generateNew = false;
-        } else {
-            generateNew = true;
-        }
+        generateNew = true;
     }
 
     //------------------------------------------------------------------
@@ -124,7 +120,6 @@ MyGame.systems.ParticleSystem = function(spec) {
         if (generateNew) {
             generateNew = false;
         }
-        // toggleGenerateNew();
     }
 
     let api = {
