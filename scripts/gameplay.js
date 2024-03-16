@@ -109,10 +109,10 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
                 center: {x: myLander.center.x, y: myLander.center.y}, 
                 rotate: false, 
                 systemLifetime: myLander.fuel, 
-                direction: { max: myLander.rotation + (5 * Math.PI / 180), min: myLander.rotation - (5 * Math.PI / 180) } 
+                direction: { max: myLander.rotation + (5 * Math.PI / 180) + (Math.PI / 2), min: myLander.rotation - (5 * Math.PI / 180) + (Math.PI / 2) } 
             }, 
             elapsedTime);
-        // console.log(myLander.fuel);
+        console.log("myLander.rotation: ", myLander.rotation);
     }
 
     function render() {
