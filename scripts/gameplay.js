@@ -6,17 +6,28 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
 
     //
     // Define a sample particle system to demonstrate its capabilities
+    // let particles = systems.ParticleSystem({
+    //         center: { x: 300, y: 300 },
+    //         radius: 10,
+    //         startAngle: 0,
+    //         endAngle: 2 * Math.PI,
+    //         speed: { mean: 50, stdev: 25 },
+    //         lifetime: { mean: 4, stdev: 1 },
+    //         systemLifetime: 500
+    //     },
+    //     graphics);  
+    // let renderParticles = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
     let particles = systems.ParticleSystem({
             center: { x: 300, y: 300 },
-            radius: 10,
-            startAngle: 0,
-            endAngle: 2 * Math.PI,
+            size: { x: 10, y: 10 },
             speed: { mean: 50, stdev: 25 },
             lifetime: { mean: 4, stdev: 1 },
             systemLifetime: 500
         },
-        graphics);  
+        graphics);
     let renderParticles = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
+
+
 
     let myKeyboard = input.Keyboard();
 
@@ -87,6 +98,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         renderer.Text.render(fuelText);
         renderer.Text.render(verticalSpeedText);
         renderer.Text.render(angleText);
+
+        // render the particles
+        // for (let particle = particles.length - 1; particle >=0; particle--) {
+        //     renderer.drawCircle(particles[particle]);
+        //     console.log("drawing particle!!", particle);
+        // }
         renderParticles.render();
     }
 

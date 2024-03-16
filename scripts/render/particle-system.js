@@ -14,7 +14,7 @@ MyGame.render.ParticleSystem = function (system, graphics, fillStyle, strokeStyl
     function render() {
         Object.getOwnPropertyNames(system.particles).forEach(function (value) {
             let particle = system.particles[value];
-            graphics.drawCircle(particle, fillStyle, strokeStyle);
+            graphics.drawRectangle(particle, fillStyle, strokeStyle);
         });
     }
 

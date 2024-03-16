@@ -88,21 +88,46 @@ MyGame.graphics = (function() {
         context.restore();
     }
 
-    function drawCircle(circ, fillStyle, strokeStyle) {
+    // function drawCircle(circ, fillStyle, strokeStyle) {
+    //     context.save();
+    //     // context.translate(circ.center.x, circ.center.y );
+    //     // context.rotate(circ.rotation);
+    //     // context.translate(-circ.center.x, -circ.center.y);
+        
+    //     // context.fillStyle = fillStyle;
+    //     // context.fillRect(circ.center.x - circ.size.x / 2, circ.center.y - circ.size.y / 2, circ.size.x, circ.size.y);
+    //     context.strokeStyle = strokeStyle;
+    //     context.moveTo(circ.center.x, circ.center.y);
+    //     context.arc(circ.center.x, circ.center.y, circ.radius, circ.startAngle, circ.endAngle);
+    //     context.stroke();
+    //     // context.strokeArc(circ.center.x, circ.center.y, circ.radius, circ.startAngle, circ.endAngle);
+
+    //     context.restore();
+    // }
+
+    // --------------------------------------------------------------
+    //
+    // Draw a rectangle to the canvas with the following attributes:
+    //      center: { x: , y: },
+    //      size: { x: , y: },
+    //      rotation:       // radians
+    //
+    // --------------------------------------------------------------
+    function drawRectangle(rect, fillStyle, strokeStyle) {
         context.save();
-        context.translate(circ.center.x, circ.center.y );
-        context.rotate(circ.rotation);
-        context.translate(-circ.center.x, -circ.center.y);
+        context.translate(rect.center.x, rect.center.y );
+        context.rotate(rect.rotation);
+        context.translate(-rect.center.x, -rect.center.y);
         
         context.fillStyle = fillStyle;
-        // context.fillRect(circ.center.x - circ.size.x / 2, circ.center.y - circ.size.y / 2, circ.size.x, circ.size.y);
+        context.fillRect(rect.center.x - rect.size.x / 2, rect.center.y - rect.size.y / 2, rect.size.x, rect.size.y);
+        
         context.strokeStyle = strokeStyle;
-        context.arc(circ.center.x, circ.center.y, circ.radius, circ.startAngle, circ.endAngle);
-
-        // context.strokeArc(circ.center.x, circ.center.y, circ.radius, circ.startAngle, circ.endAngle);
+        context.strokeRect(rect.center.x - rect.size.x / 2, rect.center.y - rect.size.y / 2, rect.size.x, rect.size.y);
 
         context.restore();
     }
+
     let api = {
         get canvas() { return canvas; },
         clear: clear,
@@ -110,7 +135,8 @@ MyGame.graphics = (function() {
         drawText: drawText,
         drawImage: drawImage,
         drawTerrain: drawTerrain,
-        drawCircle: drawCircle
+        drawRectangle: drawRectangle
+        // drawCircle: drawCircle
     };
 
     return api;
