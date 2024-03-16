@@ -70,7 +70,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             size: { mean: 10, stdev: 4 },
             speed: { mean: 100, stdev: 25 },
             lifetime: { mean: 2.5, stdev: 1 },
-            systemLifetime: 1.5
+            systemLifetime: 1.5,
+            myLander: null
         },
         graphics);
     let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
@@ -80,7 +81,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             size: { mean: 10, stdev: 4 },
             speed: { mean: 100, stdev: 25 },
             lifetime: { mean: 2.5, stdev: 1 },
-            systemLifetime: myLander.fuel
+            systemLifetime: myLander.fuel,
+            myLander: myLander // this terribl form?
         },
         graphics);
     let renderThrust = renderer.ParticleSystem(particlesThrust, graphics, 'assets/steam.png')

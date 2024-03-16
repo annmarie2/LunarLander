@@ -17,8 +17,15 @@ let Random = (function() {
         return Math.floor((Math.random() * range) + min);
     }
 
-    function nextCircleVector(amountCircle) {
-        let angle = Math.random() * amountCircle * Math.PI;
+    function nextCircleVector(maxAngle, minAngle) {
+        // let angle = Math.random() * 2 * (Math.PI);
+        let angle = Math.random() * maxAngle;
+        if (angle < minAngle) {
+            angle == minAngle;
+        } else if (angle > maxAngle) {
+            angle == maxAngle;
+        }
+        console.log("angle: ", angle);
         return {
             x: Math.cos(angle),
             y: Math.sin(angle)

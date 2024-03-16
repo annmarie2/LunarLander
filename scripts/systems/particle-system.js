@@ -8,6 +8,7 @@ MyGame.systems.ParticleSystem = function(spec) {
     let nextName = 1;       // Unique identifier for the next particle
     let particles = {};
     let systemLifetime = spec.systemLifetime;
+    let myLander = spec.myLander;
 
     //------------------------------------------------------------------
     //
@@ -30,12 +31,18 @@ MyGame.systems.ParticleSystem = function(spec) {
         let p = {
             center: {x: spec.center.x, y: spec.center.y},
             size: { x: size, y: size },
-            direction: Random.nextCircleVector(2),
+            direction: Random.nextCircleVector(2 * Math.PI, 0),
             speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
             rotation: 0,
             lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
             alive: 0    // How long the particle has been alive, in seconds
         };
+
+        if (myLander != null) {
+            p.direction = Random.nextCircleVector(myLander.rotation + (5 * Math.PI / 180), myLander.rotation - (5 * Math.PI / 180));
+            p.center.x = myLander.center.x;
+            p.center.y = myLander.center.y;
+        }
 
 
         return p;
@@ -66,7 +73,9 @@ MyGame.systems.ParticleSystem = function(spec) {
 
             //
             // Rotate proportional to its speed
-            particle.rotation += particle.speed / 500;
+            if (myLander == null) {
+                particle.rotation += particle.speed / 500;
+            }
 
             //
             // If the lifetime has expired, identify it for removal
@@ -85,6 +94,7 @@ MyGame.systems.ParticleSystem = function(spec) {
         //
         // If the generator hasn't run out of time to generate new particles
         if (systemLifetime > 0) {
+            if (myLander == null || )
             //
             // Generate some new particles
             for (let particle = 0; particle < 1; particle++) {
@@ -94,7 +104,11 @@ MyGame.systems.ParticleSystem = function(spec) {
             }
         }
 
-        systemLifetime -= elapsedTime;
+        if (myLander != null) {
+            systemLifetime = myLander.fuel;
+        } else {
+            systemLifetime -= elapsedTime;
+        }
     }
 
     let api = {
