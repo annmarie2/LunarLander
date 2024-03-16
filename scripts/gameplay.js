@@ -4,29 +4,6 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let lastTimeStamp = performance.now();
     let cancelNextRequest = true;
 
-    //
-    // Define a sample particle system to demonstrate its capabilities
-    // let particles = systems.ParticleSystem({
-    //         center: { x: 300, y: 300 },
-    //         radius: 10,
-    //         startAngle: 0,
-    //         endAngle: 2 * Math.PI,
-    //         speed: { mean: 50, stdev: 25 },
-    //         lifetime: { mean: 4, stdev: 1 },
-    //         systemLifetime: 500
-    //     },
-    //     graphics);  
-    // let renderFire = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
-    let particlesFire = systems.ParticleSystem({
-            center: { x: 300, y: 300 },
-            size: { mean: 10, stdev: 4 },
-            speed: { mean: 100, stdev: 25 },
-            lifetime: { mean: 2.5, stdev: 1 },
-            systemLifetime: 1.5
-        },
-        graphics);
-    let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
-
     let myKeyboard = input.Keyboard();
 
     let myBackground = objects.Background({  // ADDED THIS!!
@@ -75,6 +52,41 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         canvasWidth: graphics.canvas.width
     });
 
+    //
+    // Define a sample particle system to demonstrate its capabilities
+    // let particles = systems.ParticleSystem({
+    //         center: { x: 300, y: 300 },
+    //         radius: 10,
+    //         startAngle: 0,
+    //         endAngle: 2 * Math.PI,
+    //         speed: { mean: 50, stdev: 25 },
+    //         lifetime: { mean: 4, stdev: 1 },
+    //         systemLifetime: 500
+    //     },
+    //     graphics);  
+    // let renderFire = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
+    let particlesFire = systems.ParticleSystem({
+            center: { x: 300, y: 300 },
+            size: { mean: 10, stdev: 4 },
+            speed: { mean: 100, stdev: 25 },
+            lifetime: { mean: 2.5, stdev: 1 },
+            systemLifetime: 1.5
+        },
+        graphics);
+    let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
+
+    let particlesThrust = systems.ParticleSystem({
+            center: { x: myLander.center.x, y: myLander.center.y },
+            size: { mean: 10, stdev: 4 },
+            speed: { mean: 100, stdev: 25 },
+            lifetime: { mean: 2.5, stdev: 1 },
+            systemLifetime: myLander.fuel
+        },
+        graphics);
+    let renderThrust = renderer.ParticleSystem(particlesThrust, graphics, 'assets/steam.png')
+
+    
+
     function processInput(elapsedTime) {
         myKeyboard.update(elapsedTime);
     }
@@ -85,6 +97,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
         angleText.updateAngle(myLander.angle());
         particlesFire.update(elapsedTime);
+        particlesThrust.update(elapsedTime);
     }
 
     function render() {
@@ -103,6 +116,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         //     console.log("drawing particle!!", particle);
         // }
         renderFire.render();
+        renderThrust.render();
     }
 
     function gameLoop(time) {

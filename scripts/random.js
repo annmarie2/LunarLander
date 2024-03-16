@@ -17,8 +17,8 @@ let Random = (function() {
         return Math.floor((Math.random() * range) + min);
     }
 
-    function nextCircleVector() {
-        let angle = Math.random() * 2 * Math.PI;
+    function nextCircleVector(amountCircle) {
+        let angle = Math.random() * amountCircle * Math.PI;
         return {
             x: Math.cos(angle),
             y: Math.sin(angle)

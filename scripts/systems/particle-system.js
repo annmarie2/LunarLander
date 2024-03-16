@@ -30,7 +30,7 @@ MyGame.systems.ParticleSystem = function(spec) {
         let p = {
             center: {x: spec.center.x, y: spec.center.y},
             size: { x: size, y: size },
-            direction: Random.nextCircleVector(),
+            direction: Random.nextCircleVector(2),
             speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
             rotation: 0,
             lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
