@@ -24,7 +24,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         font: '16pt Arial',
         fillStyle: 'rgba(0, 255, 0, 1)',
         strokeStyle: 'rgba(0, 0, 0, 1)',
-        position: { x: 100, y: 100 }
+        position: { x: graphics.canvas.width - 115, y: 20 }
         // position: { x: graphics.canvas.width + graphics.canvas.width / 20, y: graphics.canvas.width / 2 }
     });
 
@@ -33,7 +33,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         font: '16pt Arial',
         fillStyle: 'rgba(0, 255, 0, 1)',
         strokeStyle: 'rgba(0, 0, 0, 1)',
-        position: { x: 100, y: 150 }
+        position: { x: graphics.canvas.width - 250, y: 50 }
     });
 
     let angleText = objects.Text({
@@ -41,7 +41,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         font: '16pt Arial',
         fillStyle: 'rgba(0, 255, 0, 1)',
         strokeStyle: 'rgba(0, 0, 0, 1)',
-        position: { x: 100, y: 200 }    
+        position: { x: graphics.canvas.width - 120, y: 80 }
     });
 
     let myTerrain = objects.terrain({
