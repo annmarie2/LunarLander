@@ -1,21 +1,31 @@
-MyGame.screens['main-menu'] = (function(game) {
+MyGame.screens['main-menu'] = (function(game, objects, renderer, graphics) {
     'use strict';
 
-    // function initializeBackground() {
+    let myBackground = objects.Background({  // ADDED THIS!!
+        imageSrc: 'assets/dust_bunnies.jpg',
+        startPoint: { x: 0, y: 0 },
+        size: { width: graphics.canvas.width, height: graphics.canvas.height }
+    });
+
+    // function renderBackground() {
+    //     let imageReady = false;
     //     let image = new Image();
-    //     image.isReady = false;
-    //     image.onload = function() {
-    //         this.isReady = true;
-    //     };
-    //     image.src = imageSource;
-    //     return image;
-    // }
     
+    //     image.onload = function() {
+    //         imageReady = true;
+
+    //         image.src = "assets/dust_bunnies.jpg";
+    //         let startPoint = { x: 0, y: 0 };
+    //         let size = { width: graphics.canvas.width, height: graphics.canvas.height };
+    //         graphics.drawImage(image, startPoint, size);
+
+    //     };
+    //     console.log(imageReady);
+    // }
+
     function initialize() {
-        // //
-        // // Render background image, is this the right place for that??
-        // backImg = initializeBackground("assets/dust_bunnies.jpg");
-        
+        // renderBackground();
+        renderer.Background.render(myBackground);
 
         //
         // Setup each of menu events for the screens
@@ -34,6 +44,7 @@ MyGame.screens['main-menu'] = (function(game) {
         document.getElementById('id-about').addEventListener(
             'click',
             function() { game.showScreen('about'); });
+
     }
     
     function run() {
@@ -45,4 +56,4 @@ MyGame.screens['main-menu'] = (function(game) {
         initialize : initialize,
         run : run
     };
-}(MyGame.game));
+}(MyGame.game, MyGame.objects, MyGame.render, MyGame.graphics));

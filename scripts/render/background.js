@@ -14,6 +14,7 @@ MyGame.render.Background = (function(graphics) {
     function render(spec) {
         if (spec.imageReady) {
             graphics.drawImage(spec.image, spec.startPoint, spec.size);
+            console.log("image ready!");
         }
     }
 
