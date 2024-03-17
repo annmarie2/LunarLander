@@ -71,17 +71,22 @@ MyGame.objects.Lander = function(spec) {
 
     function checkCollisions(lst) {
         if (lst.length > 1) {
-            let point1 = lst[0];
-            let point2 = lst[1];
-            let circle = { center: {x: spec.center.x, y: spec.center.y}, radius: spec.radius };
+            // let point1 = lst[0];
+            // let point2 = lst[1];
+            let circle = { center: {x: spec.center.x, y: spec.center.y}, radius: spec.size.x };
+            // let pt1 = { x: Math.floor(spec.center.x / lst.length), y: lst[ Math.floor(spec.center.x / lst.length) ] };
+            // let pt2 = { x: pt1.x + 1, y: lst[ pt1.x + 1 ] };
             for (let i = 1; i < lst.length - 1; i++) {
-                let pt1 = { x: i - 1, y: point1 };
-                let pt2 = { x: i, y: point2 };
+                let pt1 = { x: i - 1, y: lst[i - 1] };
+                let pt2 = { x: i, y: lst[i] };
+                
                 if (lineCircleIntersection(pt1, pt2, circle)) {
                     console.log("a collision!!");
+                    console.log(pt1, pt2, circle)
                 }
-                point1 = point2;
-                point2 = lst[i + 1];
+                // console.log(pt1, pt2, circle);
+                // point1 = point2;
+                // point2 = lst[i + 1];
             }
         }
     }
