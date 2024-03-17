@@ -47,10 +47,50 @@ MyGame.objects.Lander = function(spec) {
         spec.center.y += momentum.y;
     }
 
-    function update() {
+    // Reference: https://stackoverflow.com/questions/37224912/circle-line-segment-collision
+    function lineCircleIntersection(pt1, pt2, circle) {
+        let v1 = { x: pt2.x - pt1.x, y: pt2.y - pt1.y };
+        let v2 = { x: pt1.x - circle.center.x, y: pt1.y - circle.center.y };
+        let b = -2 * (v1.x * v2.x + v1.y * v2.y);
+        let c =  2 * (v1.x * v1.x + v1.y * v1.y);
+        let d = Math.sqrt(b * b - 2 * c * (v2.x * v2.x + v2.y * v2.y - circle.radius * circle.radius));
+        if (isNaN(d)) { // no intercept
+            return false;
+        }
+        // These represent the unit distance of point one and two on the line
+        let u1 = (b - d) / c;  
+        let u2 = (b + d) / c;
+        if (u1 <= 1 && u1 >= 0) {  // If point on the line segment
+            return true;
+        }
+        if (u2 <= 1 && u2 >= 0) {  // If point on the line segment
+            return true;
+        }
+        return false;
+    }
+
+    function checkCollisions(lst) {
+        if (lst.length > 1) {
+            let point1 = lst[0];
+            let point2 = lst[1];
+            let circle = { center: {x: spec.center.x, y: spec.center.y}, radius: spec.radius };
+            for (let i = 1; i < lst.length - 1; i++) {
+                let pt1 = { x: i - 1, y: point1 };
+                let pt2 = { x: i, y: point2 };
+                if (lineCircleIntersection(pt1, pt2, circle)) {
+                    console.log("a collision!!");
+                }
+                point1 = point2;
+                point2 = lst[i + 1];
+            }
+        }
+    }
+
+    function update(lst) {
         updateMomentum();
         updatePosition();
         updateOrientation();
+        checkCollisions(lst);
     }
 
     function updateOrientation() {
