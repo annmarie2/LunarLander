@@ -23,6 +23,7 @@ MyGame.objects.Lander = function(spec) {
     let fuel = 20;
     let imageReady = false;
     let image = new Image();
+    let collided = false;
 
     image.onload = function() {
         imageReady = true;
@@ -71,22 +72,24 @@ MyGame.objects.Lander = function(spec) {
 
     function checkCollisions(lst) {
         if (lst.length > 1) {
-            // let point1 = lst[0];
-            // let point2 = lst[1];
-            let circle = { center: {x: spec.center.x, y: spec.center.y}, radius: spec.size.x };
-            // let pt1 = { x: Math.floor(spec.center.x / lst.length), y: lst[ Math.floor(spec.center.x / lst.length) ] };
-            // let pt2 = { x: pt1.x + 1, y: lst[ pt1.x + 1 ] };
-            for (let i = 1; i < lst.length - 1; i++) {
-                let pt1 = { x: i - 1, y: lst[i - 1] };
-                let pt2 = { x: i, y: lst[i] };
-                
-                if (lineCircleIntersection(pt1, pt2, circle)) {
-                    console.log("a collision!!");
-                    console.log(pt1, pt2, circle)
+            let circle = { center: {x: spec.center.x, y: spec.canvasSize.height - spec.center.y}, radius: spec.size.x };
+            
+            let landerMinX = Math.floor((spec.center.x - spec.size.x) / spec.canvasSize.width * lst.length);
+            let landerMaxX = Math.floor((spec.center.x + spec.size.x) / spec.canvasSize.width * lst.length);
+            
+            for (let i = landerMinX; i < landerMaxX; i++) {
+                let pt1 = { x: i, y: spec.canvasSize.height - lst[i] };  // calculate canvas height 
+                let pt2 = { x: i + 1, y: spec.canvasSize.height - lst[i + 1] };
+
+                // IDK why but this /isn't/ working; it only detects collisions at x's starting point...
+                // if (lineCircleIntersection(pt1, pt2, circle)) {
+                //     console.log("a collision!!");
+                //     // console.log(pt1, pt2, circle)
+                // }
+                if (pt1.y > circle.center.y) {
+                    console.log("collision? ", pt1, pt2, circle);
+                    collided = true;
                 }
-                // console.log(pt1, pt2, circle);
-                // point1 = point2;
-                // point2 = lst[i + 1];
             }
         }
     }
@@ -95,7 +98,7 @@ MyGame.objects.Lander = function(spec) {
         updateMomentum();
         updatePosition();
         updateOrientation();
-        checkCollisions(lst);
+        checkCollisions(lst);    
     }
 
     function updateOrientation() {
@@ -192,7 +195,9 @@ MyGame.objects.Lander = function(spec) {
         get fuel() { return fuel; },
         get image() { return image; },
         get center() { return spec.center; },
-        get size() { return spec.size; }
+        get size() { return spec.size; },
+        get canvasSize() { return spec.canvasSize; },
+        get collided() { return collided; }
     };
 
     return api;

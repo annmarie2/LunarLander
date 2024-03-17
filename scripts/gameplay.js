@@ -16,7 +16,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         imageSrc: 'assets/lander.png',
         center: { x: 50, y: 50 },
         size: { x: 35, y: 35 },
-        moveRate: 500 / 1000    // pixels per millisecond
+        moveRate: 500 / 1000,    // pixels per millisecond
+        canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height }
     });
 
     let fuelText = objects.Text({
@@ -96,24 +97,29 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     }
 
     function update(elapsedTime) {
-        myLander.update(myTerrain.lst);
-        fuelText.updateFuel(myLander.fuel);
-        verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
-        angleText.updateAngle(myLander.angle());
-        particlesFire.update({ 
-                center: {x: 300, y: 300}, 
-                rotate: true, 
-                systemLifetime: null, 
-                direction: { max: 2 * Math.PI, min: 0 } 
-            }, 
-            elapsedTime);
-        particlesThrust.update({ 
+        if (!myLander.collided) {
+            myLander.update(myTerrain.lst);
+            fuelText.updateFuel(myLander.fuel);
+            verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
+            angleText.updateAngle(myLander.angle());
+
+            particlesThrust.update({ 
                 center: {x: myLander.center.x, y: myLander.center.y}, 
                 rotate: false, 
                 systemLifetime: myLander.fuel, 
                 direction: { max: myLander.rotation + (5 * Math.PI / 180) + (Math.PI / 2), min: myLander.rotation - (5 * Math.PI / 180) + (Math.PI / 2) } 
             }, 
             elapsedTime);
+    
+        } else {
+            particlesFire.update({ 
+                center: {x: myLander.center.x, y: myLander.center.y}, 
+                rotate: true, 
+                systemLifetime: 5, 
+                direction: { max: 2 * Math.PI, min: 0 } 
+            }, 
+            elapsedTime);
+        }
     }
 
     function render() {
@@ -121,12 +127,16 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
 
         renderer.Background.render(myBackground);
         renderer.Terrain.render(myTerrain);
-        renderFire.render();
-        renderThrust.render();
-        renderer.Lander.render(myLander);
         renderer.Text.render(fuelText);
         renderer.Text.render(verticalSpeedText);
         renderer.Text.render(angleText);
+
+        if (!myLander.collided) {
+            renderThrust.render();
+            renderer.Lander.render(myLander);
+        } else {
+            renderFire.render();
+        }
 
         // render the particles
         // for (let particle = particles.length - 1; particle >=0; particle--) {
