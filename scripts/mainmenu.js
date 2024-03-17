@@ -1,32 +1,8 @@
-MyGame.screens['main-menu'] = (function(game, objects, renderer, graphics) {
+MyGame.screens['main-menu'] = (function(game) {
     'use strict';
 
-    let myBackground = objects.Background({  // ADDED THIS!!
-        imageSrc: 'assets/dust_bunnies.jpg',
-        startPoint: { x: 0, y: 0 },
-        size: { width: graphics.canvas.width, height: graphics.canvas.height }
-    });
-
-    // function renderBackground() {
-    //     let imageReady = false;
-    //     let image = new Image();
-    
-    //     image.onload = function() {
-    //         imageReady = true;
-
-    //         image.src = "assets/dust_bunnies.jpg";
-    //         let startPoint = { x: 0, y: 0 };
-    //         let size = { width: graphics.canvas.width, height: graphics.canvas.height };
-    //         graphics.drawImage(image, startPoint, size);
-
-    //     };
-    //     console.log(imageReady);
-    // }
 
     function initialize() {
-        // renderBackground();
-        renderer.Background.render(myBackground);
-
         //
         // Setup each of menu events for the screens
         document.getElementById('id-new-game').addEventListener(
@@ -56,4 +32,4 @@ MyGame.screens['main-menu'] = (function(game, objects, renderer, graphics) {
         initialize : initialize,
         run : run
     };
-}(MyGame.game, MyGame.objects, MyGame.render, MyGame.graphics));
+}(MyGame.game));

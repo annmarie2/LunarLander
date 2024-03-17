@@ -10,7 +10,7 @@ body {
     height: 500px;
     border-style: solid;
     border-width: 1px;
-    background-color: rgb(239,239,251);
+    background-color: #191929;
     font-size: 40px;
 }
 
@@ -44,17 +44,17 @@ ul.menu li {
 ul.menu li button {
     font-family: Arial, sans-serif;
     font-size: 0.6em;
-    color: #CECEF6;
+    color: #f6ced6;
     width: 10em;
     height: 1.5em;
-    background: #0404B4;
-    border: 0.1em solid rgb(255, 0, 0);
+    background: #bb5e66;
+    border: 0.1em solid #191929;
     border-radius: 0.5em;
     box-shadow: 0.2em 0.2em 0.3em rgb(0, 0, 0);
 }
 
 ul.menu li button:hover {
-    background: #2E2EFE;
+    background: #df8a91;
 }
 
 ul.menu li button:active {
