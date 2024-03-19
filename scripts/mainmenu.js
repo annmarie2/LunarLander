@@ -21,6 +21,10 @@ MyGame.screens['main-menu'] = (function(game) {
             'click',
             function() { game.showScreen('about'); });
 
+        document.getElementById('id-custom-control').addEventListener(
+            'click',
+            function() {game.showScreen('custom-control'); });
+
     }
     
     function run() {

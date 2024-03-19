@@ -81,3 +81,7 @@ ul.menu li button:active {
 #about p {
     text-align: center;
 }
+
+body {
+    color: white;
+}
