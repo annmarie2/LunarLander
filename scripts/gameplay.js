@@ -1,13 +1,12 @@
-MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphics, input) {
+MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphics, input, persistence) {
     'use strict';
 
     let lastTimeStamp = performance.now();
     let cancelNextRequest = true;
 
     let myKeyboard = input.Keyboard();
-    console.log(input);
+    // console.log(input);
     let myControls = input.Controls();
-    // console.log(myControls);
 
     let myBackground = objects.Background({  // ADDED THIS!!
         imageSrc: 'assets/m106.jpg',
@@ -191,4 +190,4 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         run : run
     };
 
-}(MyGame.game, MyGame.objects, MyGame.render, MyGame.systems, MyGame.graphics, MyGame.input));
+}(MyGame.game, MyGame.objects, MyGame.render, MyGame.systems, MyGame.graphics, MyGame.input, MyGame.persistence));
