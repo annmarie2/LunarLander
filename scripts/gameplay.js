@@ -5,7 +5,9 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let cancelNextRequest = true;
 
     let myKeyboard = input.Keyboard();
+    console.log(input);
     let myControls = input.Controls();
+    // console.log(myControls);
 
     let myBackground = objects.Background({  // ADDED THIS!!
         imageSrc: 'assets/m106.jpg',
