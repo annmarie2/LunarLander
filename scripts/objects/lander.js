@@ -81,13 +81,13 @@ MyGame.objects.Lander = function(spec) {
 
     function inSafeZone(myTerrain, minX, maxX) {
         console.log(myTerrain);
-        // console.log(minX, maxX, myTerrain.safeStartX, myTerrain.safeStartX2, myTerrain.safeDistance);
+        console.log("minX: ", minX, "maxX: ", maxX, "myTerrain.safeZoneStartX: ", myTerrain.safeZoneStartX, "myTerrain.safeZoneStartX2: ", myTerrain.safeZoneStartX2, "myTerrain.getSafeZoneDistance(): ", myTerrain.getSafeZoneDistance());
         if (myTerrain.level == 1) {
-            if ((minX > myTerrain.safeStartX && maxX < myTerrain.safeStartX + myTerrain.getSafeZoneDistance()) || (minX > myTerrain.safeStartX2 && maxX < myTerrain.safeStartX2 + myTerrain.getSafeZoneDistance())) {
+            if ((minX > myTerrain.safeZoneStartX && maxX < myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance()) || (minX > myTerrain.safeZoneStartX2 && maxX < myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance())) {
                 return true;
             }    
         } else {
-            if (minX > myTerrain.safeStartX && maxX < myTerrain.safeStartX + myTerrain.safeDistance) {
+            if (minX > myTerrain.safeZoneStartX && maxX < myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance()) {
                 return true;
             }
         }
@@ -120,7 +120,7 @@ MyGame.objects.Lander = function(spec) {
                 if (pt1.y > circle.center.y - circle.radius || pt2.y > circle.center.y - circle.radius) {
                     collided = true;
 
-                    console.log("collided! ", landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance());
+                    console.log("collided! ", landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance(), myTerrain.safeZoneStartX2, myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance());
                     // console.log(!inSafeZone(landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneDistance), !specsGood());
                     if (!inSafeZone(myTerrain, landerMinX, landerMaxX) || !specsGood()) {
                         crashed = true;

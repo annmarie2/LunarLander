@@ -45,29 +45,34 @@ MyGame.objects.terrain = function(spec) {
         lst[lst.length - 1] = endY;
     }
 
-    function addSafeZone(lst, safeZoneDistance, startX) {
+    function implementSafeZone(lst, startX, distance) {
         let segmentWidth = spec.canvasWidth / (lst.length - 1);
 
-        if (startX == null) {
-            safeZoneStartX = Math.floor(Math.random() * lst.length);
-        } else {
-            safeZoneStartX = startX;
-        }
-        
         // ENSURE THE SAFE ZONE IS AT LEAST 15% AWAY FROM THE BORDERS
-        if ((safeZoneStartX * segmentWidth) < (spec.canvasWidth * .15)) {
-            safeZoneStartX = Math.floor((spec.canvasWidth * .15) / segmentWidth);
+        if ((startX * segmentWidth) < (spec.canvasWidth * .15)) {
+            startX = Math.floor((spec.canvasWidth * .15) / segmentWidth);
         } 
-        else if ((safeZoneStartX * segmentWidth + (safeZoneDistance * segmentWidth)) > (spec.canvasWidth - spec.canvasWidth * .15)) {
-            safeZoneStartX = Math.floor((spec.canvasWidth - spec.canvasWidth * 0.15 - segmentWidth * safeZoneDistance) / segmentWidth)
+        else if ((startX * segmentWidth + (distance * segmentWidth)) > (spec.canvasWidth - spec.canvasWidth * .15)) {
+            startX = Math.floor((spec.canvasWidth - spec.canvasWidth * 0.15 - segmentWidth * distance) / segmentWidth)
         }
     
         // ensure the height of the safe zone isn't more than a little over halfway up the screen
         let safeZoneStartY = Math.floor(Math.random() * (spec.canvasHeight / 2)) + (spec.canvasHeight * .4);
         
         // put the safe zone in the list
-        for (let i = safeZoneStartX; i < safeZoneStartX + safeZoneDistance; i++) {
+        for (let i = startX; i < startX + distance; i++) {
             lst[i] = safeZoneStartY;
+        }
+    }
+
+    function addSafeZone(lst, safeZoneDistance, startX) {
+        // console.log(lst.length, safeZoneDistance, startX);
+        if (startX == null) {
+            safeZoneStartX = Math.floor(Math.random() * lst.length);
+            implementSafeZone(lst, safeZoneStartX, safeZoneDistance);
+        } else {
+            safeZoneStartX2 = startX;
+            implementSafeZone(lst, safeZoneStartX2, safeZoneDistance);
         }
     }
 
@@ -112,17 +117,34 @@ MyGame.objects.terrain = function(spec) {
 
         addEndpoints(lst);
         if (level == 1) {
-            addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 2, null);
+            console.log("level == 1");
+            addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 4, null);
             if (safeZoneStartX < lst.length / 2) {
-                safeZoneStartX2 = safeZoneStartX + (spec.safeZoneDistance * 3); 
-                addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 2, safeZoneStartX2);
+                safeZoneStartX2 = safeZoneStartX + Math.floor(lst.length / 3);
+                console.log("safeStart, lstLength: ", safeZoneStartX, Math.floor(lst.length / 3));
+                console.log("startX2: ", safeZoneStartX2);
+                // console.log("safeZoneDistance: ", spec.safeZoneDistance * 4); 
+                addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 4, safeZoneStartX2);
+                // console.log("safeZoneSTartX2: ", safeZoneStartX2);
+
             } else {
-                safeZoneStartX2 = safeZoneStartX - (spec.safeZoneDistance * 3);
-                addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 2, safeZoneStartX2);
+                safeZoneStartX2 = safeZoneStartX - Math.floor(lst.length / 3);
+                
+                console.log("safeStart, lstLength: ", safeZoneStartX, Math.floor(lst.length / 3));
+                console.log("startX2: ", safeZoneStartX2);
+
+                addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 4, safeZoneStartX2);
             }
+
+            console.log(safeZoneStartX, safeZoneStartX2);
         } else {
-            addSafeZone(lst, spec.safeZoneDistance);
+            console.log("level == 2");
+            addSafeZone(lst, spec.safeZoneDistance, null);
         }
+
+        console.log(safeZoneStartX, safeZoneStartX2);
+
+
 
         let middleIndex = Math.floor(lst.length / 2);
     
