@@ -27,6 +27,7 @@ MyGame.objects.Lander = function(spec) {
     // prolly consolidate these two eventually 
     let collided = false;
     let crashed = false;
+    let blownUp = false;
 
     let startTime = performance.now();
     let endTime = null;
@@ -58,8 +59,6 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function inSafeZone(myTerrain, minX, maxX) {
-        // console.log(myTerrain);
-        // console.log("minX: ", minX, "maxX: ", maxX, "myTerrain.safeZoneStartX: ", myTerrain.safeZoneStartX, "myTerrain.safeZoneStartX2: ", myTerrain.safeZoneStartX2, "myTerrain.getSafeZoneDistance(): ", myTerrain.getSafeZoneDistance());
         if (myTerrain.level == 1) {
             let landedOne = minX > myTerrain.safeZoneStartX && maxX < myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance();
             let landedTwo = minX > myTerrain.safeZoneStartX2 && maxX < myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance();
@@ -125,7 +124,8 @@ MyGame.objects.Lander = function(spec) {
             updateScore(persistence);
             console.log(score);
         }
-        else {
+        else if (!blownUp) {
+            blownUp = true;
             particleManager.shipCrash(spec.center.x, spec.center.y);
         }
     }

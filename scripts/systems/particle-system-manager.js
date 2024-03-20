@@ -35,7 +35,7 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
                 size: { mean: 10, stdev: 4 },
                 speed: { mean: 100, stdev: 25 },
                 lifetime: { mean: 2.5, stdev: 1 },
-                systemLifetime: 1.5,
+                systemLifetime: 1,
                 direction: {max: 2 * Math.PI, min: 0},
                 generateNew: true,
                 isThrust: false
@@ -69,7 +69,7 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
 
     function render() {
         if (renderThrust != null) {
-            renderThrust.render();
+            // renderThrust.render();
         }
 
         if (renderFire != null) {
