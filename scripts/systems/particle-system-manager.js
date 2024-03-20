@@ -69,7 +69,7 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
 
     function render() {
         if (renderThrust != null) {
-            // renderThrust.render();
+            renderThrust.render();
         }
 
         if (renderFire != null) {

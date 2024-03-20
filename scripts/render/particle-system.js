@@ -23,7 +23,6 @@ MyGame.render.ParticleSystem = function (system, graphics, imageSrc) {
     //
     //------------------------------------------------------------------
     function render() {
-        console.log(isReady);
         if (isReady) {
             Object.getOwnPropertyNames(system.particles).forEach( function(value) {
                 let particle = system.particles[value];
