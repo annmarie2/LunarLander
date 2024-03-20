@@ -91,14 +91,14 @@ MyGame.objects.Lander = function(spec) {
                 //     // console.log(pt1, pt2, circle)
                 // }
                 if (pt1.y > circle.center.y) {
-                    console.log("collision? ", pt1, pt2, circle);
+                    // console.log("collision? ", pt1, pt2, circle);
                     collided = true;
                 }
             }
         }
     }
 
-    function update(lst) {
+    function update(lst, particleManager) {
         if (!collided) {
             updateMomentum();
             updatePosition();
@@ -106,7 +106,7 @@ MyGame.objects.Lander = function(spec) {
             checkCollisions(lst);    
         } else if (!crashed){
             crashed = true;
-            spec.particleManager.shipCrash(spec.center.x, spec.center.y);
+            particleManager.shipCrash(spec.center.x, spec.center.y);
         }
     }
 

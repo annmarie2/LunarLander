@@ -20,8 +20,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         center: { x: 50, y: 50 },
         size: { x: 35, y: 35 },
         moveRate: 500 / 1000,    // pixels per millisecond
-        canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height },
-        particleManager: particleManager
+        canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height }
     });
 
     let fuelText = objects.Text({
@@ -89,10 +88,11 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
 
     function update(elapsedTime) {
         // if (!myLander.collided) {
-            myLander.update(myTerrain.lst);
+            myLander.update(myTerrain.lst, particleManager);
             fuelText.updateFuel(myLander.fuel);
             verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
             angleText.updateAngle(myLander.angle());
+            particleManager.update(myLander, elapsedTime);
 
             particlesThrust.update({ 
                 center: {x: myLander.center.x, y: myLander.center.y}, 
@@ -121,6 +121,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         renderer.Text.render(fuelText);
         renderer.Text.render(verticalSpeedText);
         renderer.Text.render(angleText);
+        particleManager.render();
 
         // if (!myLander.collided) {
             renderThrust.render();

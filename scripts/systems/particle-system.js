@@ -127,9 +127,9 @@ MyGame.systems.ParticleSystem = function(spec) {
             // systemLifetime = updateSpec.systemLifetime;
         // }
 
-        if (generateNew) {
-            generateNew = false;
-        }
+        // if (generateNew) {
+        //     generateNew = false;
+        // }
     }
 
     let api = {
