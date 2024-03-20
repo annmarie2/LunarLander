@@ -5,7 +5,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let cancelNextRequest = true;
 
     let myKeyboard = input.Keyboard();
-    let soundPlayer = player
+    let soundPlayer = systems.SoundSystem();
 
     let myBackground = objects.Background({
         imageSrc: 'assets/m106.jpg',
@@ -18,7 +18,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         center: { x: 50, y: 50 },
         size: { x: 35, y: 35 },
         moveRate: 500 / 1000,    // pixels per millisecond
-        canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height }
+        canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height },
+        soundSystem: soundPlayer
     });
 
     let particleManager = systems.ParticleSystemManager;
