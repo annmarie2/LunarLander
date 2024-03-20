@@ -28,6 +28,7 @@ MyGame.objects.Lander = function(spec) {
     let collided = false;
     let crashed = false;
     let blownUp = false;
+    let wonLevel = false;
 
     let startTime = performance.now();
     let endTime = null;
@@ -102,6 +103,7 @@ MyGame.objects.Lander = function(spec) {
                         console.log("crashed!");
                     } else {
                         spec.soundSystem.playSound('audio/sound-2');
+                        wonLevel = true;
                         endTime = performance.now();
                     }
                 }
@@ -224,6 +226,7 @@ MyGame.objects.Lander = function(spec) {
         turnRight: turnRight,
         moveUp: moveUp,
         moveTo: moveTo,
+        get wonLevel() { return wonLevel; },
         get crashed() { return crashed; },
         get imageReady() { return imageReady; },
         get rotation() { return rotation; },

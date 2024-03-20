@@ -168,11 +168,17 @@ MyGame.objects.terrain = function(spec) {
     //     }
     // }
 
+    function nextLevel() {
+        spec.level = 1;
+        lst = initializeList();
+    }
+
     let lst = initializeList();
 
     let api = {
         lst: lst,
         getSafeZoneDistance: getSafeZoneDistance,
+        nextLevel: nextLevel,
         get iterations() { return spec.iterations; },
         get s() { return spec.s; },
         get level() { return level; },

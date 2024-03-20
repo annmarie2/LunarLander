@@ -7,6 +7,13 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let myKeyboard = input.Keyboard();
     let soundPlayer = systems.SoundSystem();
 
+    //
+    // KEEPS TRACK OF WHAT "LEVEL" YOU'RE ON
+    // 1 for the first level with two landings
+    // 2 for the second level with one landing
+    // 3 for completed whole game
+    let gameLevel = 1;
+
     let myBackground = objects.Background({
         imageSrc: 'assets/m106.jpg',
         startPoint: { x: 0, y: 0 },
@@ -49,13 +56,21 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         position: { x: graphics.canvas.width - 120, y: 80 }
     });
 
+    let winText = objects.Text({
+        text: "SUCCESSFUL LANDING",
+        font: '16pt Arial',
+        fillStyle: 'rgba(0, 255, 0, 1)',
+        strokeStyle: 'rgba(0, 0, 0, 1)',
+        position: { x: graphics.canvas.width / 2, y: graphics.canvas.height / 2 }
+    });
+
     let myTerrain = objects.terrain({
         iterations: 8,
         s: 1.5,
         safeZoneDistance: 40,
         canvasHeight: graphics.canvas.height,
         canvasWidth: graphics.canvas.width,
-        level: 2
+        level: gameLevel
     });
 
     function registerKeys() {
@@ -73,6 +88,43 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         });
     }
 
+    function updateGameLevel(myLander) {
+        if (gameLevel == 1) {
+            if (myLander.wonLevel) {
+                console.log("won level 1!!");
+                gameLevel = 2;
+
+                renderer.Text.render(winText);
+
+                // myTerrain.nextLevel;
+                myTerrain = objects.terrain({
+                    iterations: 8,
+                    s: 1.5,
+                    safeZoneDistance: 40,
+                    canvasHeight: graphics.canvas.height,
+                    canvasWidth: graphics.canvas.width,
+                    level: gameLevel
+                });
+
+                myLander = objects.Lander({
+                    imageSrc: 'assets/lander.png',
+                    center: { x: 50, y: 50 },
+                    size: { x: 35, y: 35 },
+                    moveRate: 500 / 1000,    // pixels per millisecond
+                    canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height },
+                    soundSystem: soundPlayer
+                });
+            }
+        }
+        else if (gameLevel == 2) {
+            if (myLander.wonLevel) {
+                console.log("won level 2!!");
+                gameLevel = 3;
+                // some animation here to say you won :)
+            }
+        }
+    }
+
     function processInput(elapsedTime) {
         myKeyboard.update(elapsedTime);
     }
@@ -83,6 +135,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
         angleText.updateAngle(myLander.angle());
         particleManager.update(myLander, elapsedTime);
+        updateGameLevel(myLander);
     }
 
     function render() {

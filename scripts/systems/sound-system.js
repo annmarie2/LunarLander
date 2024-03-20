@@ -68,18 +68,6 @@ MyGame.systems.SoundSystem = (function(spec) {
     //
     //------------------------------------------------------------------
     function playSound(whichSound) {
-        // let elementStatus = document.getElementById(idStatus);
-        // let elementButton = document.getElementById(idButton);
-
-        // elementStatus.innerHTML = 'playing';
-        // MyGame.sounds[whichSound].addEventListener('ended', function() {
-        //     elementStatus.innerHTML = 'ended';
-        //     elementButton.innerHTML = `${label} - Play!`;
-        //     elementButton.onclick = function() { playSound(whichSound, label, idButton, idStatus); };
-        // });
-
-        // elementButton.onclick = function() { pauseSound(whichSound, label, idButton, idStatus); };
-
         MyGame.sounds[whichSound].play();
     }
 
