@@ -23,6 +23,8 @@ MyGame.objects.Lander = function(spec) {
     let fuel = 20;
     let imageReady = false;
     let image = new Image();
+
+    // prolly consolidate these two eventually 
     let collided = false;
     let crashed = false;
 
@@ -167,6 +169,8 @@ MyGame.objects.Lander = function(spec) {
     
             fuel -= .1;
         }
+
+
     }
 
     function moveTo(pos) {

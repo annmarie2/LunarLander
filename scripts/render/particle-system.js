@@ -23,13 +23,12 @@ MyGame.render.ParticleSystem = function (system, graphics, imageSrc) {
     //
     //------------------------------------------------------------------
     function render() {
-        // console.log(isReady);
         if (isReady) {
             Object.getOwnPropertyNames(system.particles).forEach( function(value) {
                 let particle = system.particles[value];
                 graphics.drawTexture(image, particle.center, particle.rotation, particle.size);
-                console.log("texture drawn!");
             });
+            console.log("texture drawn!");
         }
     }
 

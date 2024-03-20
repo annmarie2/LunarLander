@@ -9,13 +9,24 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
     let particlesThrust = null;
     let renderThrust = null;
 
+    // let showThrust = false;
+
     let particlesFire = null;
     let renderFire = null;
 
-    // let shipCrashed = null;
-
     function shipThrust(myLander) {
-
+        particlesThrust = systems.ParticleSystem({
+                center: { x: myLander.center.x, y: myLander.center.y },
+                size: { mean: 10, stdev: 4 },
+                speed: { mean: 100, stdev: 25 },
+                lifetime: { mean: 2.5, stdev: 1 },
+                systemLifetime: myLander.fuel,
+                direction: { max: 2 * Math.PI, min: 0 } ,
+                generateNew: true,
+                isThrust: true
+            },
+            graphics);
+        renderThrust = renderer.ParticleSystem(particlesThrust, graphics, 'assets/steam.png');
     }
 
     function shipCrash(x, y) {
@@ -26,7 +37,8 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
                 lifetime: { mean: 2.5, stdev: 1 },
                 systemLifetime: 1.5,
                 direction: {max: 2 * Math.PI, min: 0},
-                generateNew: true
+                generateNew: false,
+                isThrust: false
             },
             graphics);
 
@@ -48,7 +60,7 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
             particlesFire.update({
                 center: {x: myLander.center.x, y: myLander.center.y}, 
                 rotate: true, 
-                systemLifetime: 5, 
+                systemLifetime: null, 
                 direction: { max: 2 * Math.PI, min: 0 } 
             }, 
             elapsedTime);
@@ -65,9 +77,22 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
         }
     }
 
+    function toggleShowThrust() {
+        // if (showThrust) {
+        //     showThrust = false;
+        // } else {
+        //     showThrust = true;
+        // }
+        if (particlesThrust != null) {
+            particlesThrust.toggleGenerateNew;
+            console.log(particlesThrust.generateNew);    
+        }
+    }
+
     let api = {
         update: update,
         render: render,
+        toggleShowThrust: toggleShowThrust,
         shipThrust: shipThrust,
         shipCrash: shipCrash
     };

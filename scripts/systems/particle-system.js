@@ -11,6 +11,7 @@ MyGame.systems.ParticleSystem = function(spec) {
     let particles = {};
     let systemLifetime = spec.systemLifetime;
     let generateNew = spec.generateNew;
+    let isThrust = spec.isThrust;
     // let center = { x: spec.center.x, y: spec.center.y };
 
     //------------------------------------------------------------------
@@ -50,15 +51,11 @@ MyGame.systems.ParticleSystem = function(spec) {
     //
     //------------------------------------------------------------------
     function toggleGenerateNew() {
-        generateNew = true;
-    }
-
-    function shipThrust(myLander) {
-
-    }
-
-    function shipCrash(myLander) {
-        
+        // if (generateNew) {
+            // generateNew = false;
+        // } else {
+            generateNew = true;
+        // }
     }
 
     //------------------------------------------------------------------
@@ -121,21 +118,19 @@ MyGame.systems.ParticleSystem = function(spec) {
             }
         }
 
-        // if (updateSpec.systemLifetime == null) {
-        systemLifetime -= elapsedTime;
-        // } else {
-            // systemLifetime = updateSpec.systemLifetime;
-        // }
+        if (updateSpec.systemLifetime == null) {
+            systemLifetime -= elapsedTime;
+        } else {
+            systemLifetime = updateSpec.systemLifetime;
+        }
 
-        // if (generateNew) {
+        // if (isThrust && generateNew) {
         //     generateNew = false;
         // }
     }
 
     let api = {
         update: update,
-        shipThrust: shipThrust,
-        shipCrash: shipCrash,
         toggleGenerateNew: toggleGenerateNew,
         get generateNew() { return generateNew; },
         get particles() { return particles; },
