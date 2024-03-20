@@ -78,13 +78,8 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
     }
 
     function toggleShowThrust() {
-        // if (showThrust) {
-        //     showThrust = false;
-        // } else {
-        //     showThrust = true;
-        // }
         if (particlesThrust != null) {
-            particlesThrust.toggleGenerateNew;
+            particlesThrust.toggleGenerateNew();
             console.log(particlesThrust.generateNew);    
         }
     }

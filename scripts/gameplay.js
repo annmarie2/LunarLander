@@ -128,7 +128,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
         myKeyboard.register(myControls.moveUp, myLander.moveUp);
-        // myKeyboard.register(myControls.moveUp, particleManager.toggleShowThrust);
+        myKeyboard.register(myControls.moveUp, particleManager.toggleShowThrust);
         myKeyboard.register(myControls.turnLeft, myLander.turnLeft);
         myKeyboard.register(myControls.turnRight, myLander.turnRight);
         myKeyboard.register('Escape', function() {

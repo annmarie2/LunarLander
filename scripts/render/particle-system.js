@@ -28,7 +28,6 @@ MyGame.render.ParticleSystem = function (system, graphics, imageSrc) {
                 let particle = system.particles[value];
                 graphics.drawTexture(image, particle.center, particle.rotation, particle.size);
             });
-            console.log("texture drawn!");
         }
     }
 
