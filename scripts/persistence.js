@@ -44,7 +44,7 @@ MyGame.persistence = (function () {
     }
 
     // Custom keys functions
-    
+
     function getTurnLeft() {
         // console.log(customControls['left']);
         return customControls['left'];
@@ -62,21 +62,22 @@ MyGame.persistence = (function () {
 
     function changeCustomControl(key, value) {
         customControls[key] = value;
+        console.log(customControls);
         localStorage['MyGame.customControls'] = JSON.stringify(customControls);
     }
 
     function reportCustomControls() {
         let htmlNodeLeft = document.getElementById('id-custom-control-turn-left');
-        htmlNodeLeft.innerHtml = '';
-        htmlNodeLeft.innerHtml = 'Left: ' + (customControls['left']);
+        htmlNodeLeft.innerHTML = '';
+        htmlNodeLeft.innerHTML = 'Left: ' + (customControls['left']);
 
         let htmlNodeRight = document.getElementById('id-custom-control-turn-right');
-        htmlNodeRight.innerHtml = '';
-        htmlNodeRight.innerHtml = 'Right: ' + (customControls['right']);
+        htmlNodeRight.innerHTML = '';
+        htmlNodeRight.innerHTML = 'Right: ' + (customControls['right']);
 
         let htmlNodeUp = document.getElementById('id-custom-control-move-up');
-        htmlNodeUp.innerHtml = '';
-        htmlNodeUp.innerHtml = 'Up: ' + (customControls['up']);
+        htmlNodeUp.innerHTML = '';
+        htmlNodeUp.innerHTML = 'Up: ' + (customControls['up']);
     }
 
     return {

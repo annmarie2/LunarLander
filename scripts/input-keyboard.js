@@ -1,4 +1,4 @@
-MyGame.input.Keyboard = function () {
+MyGame.input.Keyboard = function (elapsedTime) {
     let that = {
         keys: {},
         handlers: {}

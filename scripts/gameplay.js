@@ -115,10 +115,6 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
 
-        console.log(persistence.getTurnLeft);
-        console.log(persistence.getTurnRight);
-        console.log(persistence.getMoveUp);
-
         myKeyboard.register(persistence.getMoveUp(), myLander.moveUp);
         myKeyboard.register(persistence.getMoveUp(), particleManager.toggleShowThrust);
         myKeyboard.register(persistence.getTurnLeft(), myLander.turnLeft);
