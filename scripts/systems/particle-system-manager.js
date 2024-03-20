@@ -23,6 +23,8 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
             graphics);
         let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
 
+        // console.log(particlesFire.systemLifetime);
+
         let lastTimeStamp = performance.now();
         while (particlesFire.systemLifetime > 0) {
             let time = performance.now();
@@ -32,13 +34,17 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
             particlesFire.update({ 
                 center: {x: x, y: y}, 
                 rotate: true, 
-                systemLifetime: 5, 
+                // systemLifetime: , 
                 direction: { max: 2 * Math.PI, min: 0 } 
             }, 
             elapsedTime);
 
             renderFire.render();
+
+            console.log("in while loop");
         }
+
+        console.log("exited while loop");
     }
 
     let api = {

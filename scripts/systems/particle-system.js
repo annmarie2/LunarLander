@@ -119,11 +119,11 @@ MyGame.systems.ParticleSystem = function(spec) {
             }
         }
 
-        if (updateSpec.systemLifetime == null) {
-            systemLifetime -= elapsedTime;
-        } else {
-            systemLifetime = updateSpec.systemLifetime;
-        }
+        // if (updateSpec.systemLifetime == null) {
+        systemLifetime -= elapsedTime;
+        // } else {
+            // systemLifetime = updateSpec.systemLifetime;
+        // }
 
         if (generateNew) {
             generateNew = false;
