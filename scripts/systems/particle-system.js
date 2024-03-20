@@ -20,17 +20,6 @@ MyGame.systems.ParticleSystem = function(spec) {
     //
     //------------------------------------------------------------------
     function create() {
-        // let p = {
-        //         center: {x: spec.center.x, y: spec.center.y},
-        //         radius: spec.radius,
-        //         startAngle: spec.startAngle,
-        //         endAngle: spec.endAngle,
-        //         direction: Random.nextCircleVector(),
-        //         speed: Random.nextGaussian(spec.speed.mean, spec.speed.stdev), // pixels per second
-        //         rotation: 0,
-        //         lifetime: Random.nextGaussian(spec.lifetime.mean, spec.lifetime.stdev),    // How long the particle should live, in seconds
-        //         alive: 0    // How long the particle has been alive, in seconds
-        //     };
         let size = Random.nextGaussian(spec.size.mean, spec.size.stdev);
         let p = {
             center: {x: spec.center.x, y: spec.center.y},
@@ -51,11 +40,7 @@ MyGame.systems.ParticleSystem = function(spec) {
     //
     //------------------------------------------------------------------
     function toggleGenerateNew() {
-        // if (generateNew) {
-            // generateNew = false;
-        // } else {
-            generateNew = true;
-        // }
+        generateNew = true;
     }
 
     //------------------------------------------------------------------
