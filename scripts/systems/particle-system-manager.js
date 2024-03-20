@@ -37,7 +37,7 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
                 lifetime: { mean: 2.5, stdev: 1 },
                 systemLifetime: 1.5,
                 direction: {max: 2 * Math.PI, min: 0},
-                generateNew: false,
+                generateNew: true,
                 isThrust: false
             },
             graphics);
