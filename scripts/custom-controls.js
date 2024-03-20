@@ -1,4 +1,4 @@
-MyGame.screens['custom-control'] = (function(game, input) {
+MyGame.screens['custom-control'] = (function(game, input, persistence) {
     'use strict';
 
     // let myKeyboard = input.Keyboard();
@@ -6,26 +6,31 @@ MyGame.screens['custom-control'] = (function(game, input) {
     // let turnRight = 'd';
     // let moveUp = 'w';
 
-    let myControls = input.Controls();
+    // let myControls = input.Controls();
+
+    persistence.reportCustomControls();
 
     function customTurnLeft() {
         window.addEventListener('keydown', function (e) {
             console.log("turnLeft", e.key);
-            myControls.changeTurnLeft(e.key);
+            // myControls.changeTurnLeft(e.key, persistence);
+            persistence.changeCustomControl('left', e.key);
         });
     }
 
     function customTurnRight() {
         window.addEventListener('keydown', function (e) {
             console.log("turnRight", e.key);
-            myControls.changeTurnRight(e.key);
+            // myControls.changeTurnRight(e.key);
+            persistence.changeCustomControl('right', e.key);
         });
     }
 
     function customMoveUp() {
         window.addEventListener('keydown', function (e) {
             console.log("moveUp", e.key);
-            myControls.changeMoveUp(e.key);
+            // myControls.changeMoveUp(e.key);
+            persistence.changeCustomControl('up', e.key);
         });
     }
     
@@ -63,4 +68,4 @@ MyGame.screens['custom-control'] = (function(game, input) {
         get turnRight() { return turnRight; },
         get moveUp() { return moveUp; }
     };
-}(MyGame.game, MyGame.input));
+}(MyGame.game, MyGame.input, MyGame.persistence));

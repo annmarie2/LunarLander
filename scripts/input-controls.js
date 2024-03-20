@@ -1,19 +1,22 @@
 MyGame.input.Controls = function () {
     
-    let turnLeft = 'a';
-    let turnRight = 'd';
-    let moveUp = 'w';
+    // let turnLeft = 'a';
+    // let turnRight = 'd';
+    // let moveUp = 'w';
 
-    function changeTurnLeft(key) {
-        turnLeft = key;
+    function changeTurnLeft(key, persistence) {
+        persistence.changeCustomControl('left', key);
+        // turnLeft = key;
     }
 
-    function changeTurnRight(key) {
-        turnRight = key;
+    function changeTurnRight(key, persistence) {
+        persistence.changeCustomControl('right', key);
+        // turnRight = key;
     }
 
-    function changeMoveUp(key) {
-        moveUp = key;
+    function changeMoveUp(key, persistence) {
+        persistence.changeCustomControl('up', key);
+        // moveUp = key;
     }
 
     let api = {

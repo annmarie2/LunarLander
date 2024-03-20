@@ -5,7 +5,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let cancelNextRequest = true;
 
     let myKeyboard = input.Keyboard();
-    let myControls = input.Controls();
+    // let myControls = input.Controls();
 
     let myBackground = objects.Background({
         imageSrc: 'assets/m106.jpg',
@@ -114,10 +114,10 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
 
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
-        myKeyboard.register(myControls.moveUp, myLander.moveUp);
-        myKeyboard.register(myControls.moveUp, particleManager.toggleShowThrust);
-        myKeyboard.register(myControls.turnLeft, myLander.turnLeft);
-        myKeyboard.register(myControls.turnRight, myLander.turnRight);
+        myKeyboard.register(persistence.getMoveUp, myLander.moveUp);
+        myKeyboard.register(persistence.getMoveUp, particleManager.toggleShowThrust);
+        myKeyboard.register(persistence.getTurnLeft, myLander.turnLeft);
+        myKeyboard.register(persistence.getTurnRight, myLander.turnRight);
         myKeyboard.register('Escape', function() {
             //
             // Stop the game loop by canceling the request for the next animation frame

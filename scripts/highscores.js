@@ -4,7 +4,7 @@ MyGame.screens['high-scores'] = (function(game, persistence) {
     function initialize() {
         // persistence.add(1,2);
         // persistence.add(3,4);
-        persistence.report();
+        persistence.reportScores();
 
         document.getElementById('id-high-scores-back').addEventListener(
             'click',
