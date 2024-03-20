@@ -15,7 +15,9 @@
 MyGame.objects.terrain = function(spec) {
     'use strict';
 
+    let level = spec.level;
     let safeZoneStartX = null;
+    let safeZoneStartX2 = null;
 
     // GOT THIS CODE FROM GOOD OL GPT :)
     function generateGaussianRandom() {
@@ -43,23 +45,28 @@ MyGame.objects.terrain = function(spec) {
         lst[lst.length - 1] = endY;
     }
 
-    function addSafeZone(lst) {
+    function addSafeZone(lst, safeZoneDistance, startX) {
         let segmentWidth = spec.canvasWidth / (lst.length - 1);
-        safeZoneStartX = Math.floor(Math.random() * lst.length);
+
+        if (startX == null) {
+            safeZoneStartX = Math.floor(Math.random() * lst.length);
+        } else {
+            safeZoneStartX = startX;
+        }
         
         // ENSURE THE SAFE ZONE IS AT LEAST 15% AWAY FROM THE BORDERS
         if ((safeZoneStartX * segmentWidth) < (spec.canvasWidth * .15)) {
             safeZoneStartX = Math.floor((spec.canvasWidth * .15) / segmentWidth);
         } 
-        else if ((safeZoneStartX * segmentWidth + (spec.safeZoneDistance * segmentWidth)) > (spec.canvasWidth - spec.canvasWidth * .15)) {
-            safeZoneStartX = Math.floor((spec.canvasWidth - spec.canvasWidth * 0.15 - segmentWidth * spec.safeZoneDistance) / segmentWidth)
+        else if ((safeZoneStartX * segmentWidth + (safeZoneDistance * segmentWidth)) > (spec.canvasWidth - spec.canvasWidth * .15)) {
+            safeZoneStartX = Math.floor((spec.canvasWidth - spec.canvasWidth * 0.15 - segmentWidth * safeZoneDistance) / segmentWidth)
         }
     
         // ensure the height of the safe zone isn't more than a little over halfway up the screen
         let safeZoneStartY = Math.floor(Math.random() * (spec.canvasHeight / 2)) + (spec.canvasHeight * .4);
         
         // put the safe zone in the list
-        for (let i = safeZoneStartX; i < safeZoneStartX + spec.safeZoneDistance; i++) {
+        for (let i = safeZoneStartX; i < safeZoneStartX + safeZoneDistance; i++) {
             lst[i] = safeZoneStartY;
         }
     }
@@ -104,23 +111,44 @@ MyGame.objects.terrain = function(spec) {
         let lst = new Array(numPoints);
 
         addEndpoints(lst);
-        addSafeZone(lst);
+        if (level == 1) {
+            addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 2, null);
+            if (safeZoneStartX < lst.length / 2) {
+                safeZoneStartX2 = safeZoneStartX + (spec.safeZoneDistance * 3); 
+                addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 2, safeZoneStartX2);
+            } else {
+                safeZoneStartX2 = safeZoneStartX - (spec.safeZoneDistance * 3);
+                addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 2, safeZoneStartX2);
+            }
+        } else {
+            addSafeZone(lst, spec.safeZoneDistance);
+        }
 
         let middleIndex = Math.floor(lst.length / 2);
     
         generateTerrain(middleIndex, spec.iterations, lst);
 
         return lst;
-    }                  
+    }
+
+    function getSafeZoneDistance() {
+        if (level == 1) {
+            return spec.safeZoneDistance + (spec.safeZoneDistance / 2);
+        } else {
+            return spec.safeZoneDistance;
+        }
+    }
 
     let lst = initializeList();
 
     let api = {
         lst: lst,
+        getSafeZoneDistance: getSafeZoneDistance,
         get iterations() { return spec.iterations; },
         get s() { return spec.s; },
+        get level() { return level; },
         get safeZoneStartX() { return safeZoneStartX; },
-        get safeZoneDistance() { return spec.safeZoneDistance; },
+        get safeZoneStartX2() { return safeZoneStartX2; },
         get canvasHeight() { return spec.canvasHeight; },
         get canvasWidth() { return spec.canvasWidth; },
     };

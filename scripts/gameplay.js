@@ -53,7 +53,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         s: 1.5,
         safeZoneDistance: 40,
         canvasHeight: graphics.canvas.height,
-        canvasWidth: graphics.canvas.width
+        canvasWidth: graphics.canvas.width,
+        level: 1
     });
 
     function processInput(elapsedTime) {

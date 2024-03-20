@@ -79,11 +79,19 @@ MyGame.objects.Lander = function(spec) {
         return false;
     }
 
-    function inSafeZone(minX, maxX, safeStartX, safeDistance) {
-        if (minX < safeStartX || maxX > safeStartX + safeDistance) {
-            return false;
+    function inSafeZone(myTerrain, minX, maxX) {
+        console.log(myTerrain);
+        // console.log(minX, maxX, myTerrain.safeStartX, myTerrain.safeStartX2, myTerrain.safeDistance);
+        if (myTerrain.level == 1) {
+            if ((minX > myTerrain.safeStartX && maxX < myTerrain.safeStartX + myTerrain.getSafeZoneDistance()) || (minX > myTerrain.safeStartX2 && maxX < myTerrain.safeStartX2 + myTerrain.getSafeZoneDistance())) {
+                return true;
+            }    
+        } else {
+            if (minX > myTerrain.safeStartX && maxX < myTerrain.safeStartX + myTerrain.safeDistance) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
     function specsGood() {
@@ -112,9 +120,9 @@ MyGame.objects.Lander = function(spec) {
                 if (pt1.y > circle.center.y - circle.radius || pt2.y > circle.center.y - circle.radius) {
                     collided = true;
 
-                    console.log("collided! ", landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.safeZoneDistance);
+                    console.log("collided! ", landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance());
                     // console.log(!inSafeZone(landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneDistance), !specsGood());
-                    if (!inSafeZone(landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneDistance) || !specsGood()) {
+                    if (!inSafeZone(myTerrain, landerMinX, landerMaxX) || !specsGood()) {
                         crashed = true;
                         console.log("crashed!");
                     } else {
