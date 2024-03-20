@@ -78,7 +78,7 @@ MyGame.objects.Lander = function(spec) {
 
     function checkCollisions(lst) {
         if (lst.length > 1) {
-            let circle = { center: {x: spec.center.x, y: spec.canvasSize.height - spec.center.y}, radius: spec.size.x };
+            let circle = { center: {x: spec.center.x, y: spec.canvasSize.height - spec.center.y}, radius: spec.size.x / 2 };
             
             let landerMinX = Math.floor((spec.center.x - spec.size.x) / spec.canvasSize.width * lst.length);
             let landerMaxX = Math.floor((spec.center.x + spec.size.x) / spec.canvasSize.width * lst.length);
@@ -92,7 +92,7 @@ MyGame.objects.Lander = function(spec) {
                 //     console.log("a collision!!");
                 //     // console.log(pt1, pt2, circle)
                 // }
-                if (pt1.y > circle.center.y) {
+                if (pt1.y > circle.center.y - circle.radius || pt2.y > circle.center.y - circle.radius) {
                     // console.log("collision? ", pt1, pt2, circle);
                     collided = true;
                 }

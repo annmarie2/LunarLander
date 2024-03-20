@@ -96,20 +96,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         renderer.Text.render(verticalSpeedText);
         renderer.Text.render(angleText);
         particleManager.render();
-
-        // if (!myLander.collided) {
-            // renderThrust.render();
-            renderer.Lander.render(myLander);
-        // } else {
-            // renderFire.render();
-        // }
-
-        // render the particles
-        // for (let particle = particles.length - 1; particle >=0; particle--) {
-        //     renderer.drawCircle(particles[particle]);
-        //     console.log("drawing particle!!", particle);
-        // }
-
+        renderer.Lander.render(myLander);
     }
 
     function gameLoop(time) {
