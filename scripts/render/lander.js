@@ -13,8 +13,10 @@ MyGame.render.Lander = (function(graphics) {
     'use strict';
 
     function render(spec) {
-        if (spec.imageReady) {
-            graphics.drawTexture(spec.image, spec.center, spec.rotation, spec.size);
+        if (!spec.crashed) {
+            if (spec.imageReady) {
+                graphics.drawTexture(spec.image, spec.center, spec.rotation, spec.size);
+            }    
         }
     }
 

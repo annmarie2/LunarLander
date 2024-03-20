@@ -15,6 +15,8 @@
 MyGame.objects.terrain = function(spec) {
     'use strict';
 
+    let safeZoneStartX = null;
+
     // GOT THIS CODE FROM GOOD OL GPT :)
     function generateGaussianRandom() {
         let u1, u2;
@@ -43,7 +45,7 @@ MyGame.objects.terrain = function(spec) {
 
     function addSafeZone(lst) {
         let segmentWidth = spec.canvasWidth / (lst.length - 1);
-        let safeZoneStartX = Math.floor(Math.random() * lst.length);
+        safeZoneStartX = Math.floor(Math.random() * lst.length);
         
         // ENSURE THE SAFE ZONE IS AT LEAST 15% AWAY FROM THE BORDERS
         if ((safeZoneStartX * segmentWidth) < (spec.canvasWidth * .15)) {
@@ -117,6 +119,7 @@ MyGame.objects.terrain = function(spec) {
         lst: lst,
         get iterations() { return spec.iterations; },
         get s() { return spec.s; },
+        get safeZoneStartX() { return safeZoneStartX; },
         get safeZoneDistance() { return spec.safeZoneDistance; },
         get canvasHeight() { return spec.canvasHeight; },
         get canvasWidth() { return spec.canvasWidth; },

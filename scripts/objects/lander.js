@@ -30,7 +30,6 @@ MyGame.objects.Lander = function(spec) {
 
     // let myKeyboard = input.Keyboard();
 
-
     image.onload = function() {
         imageReady = true;
     };
@@ -76,16 +75,16 @@ MyGame.objects.Lander = function(spec) {
         return false;
     }
 
-    function checkCollisions(lst) {
-        if (lst.length > 1) {
+    function checkCollisions(myTerrain) {
+        if (myTerrain.lst.length > 1) {
             let circle = { center: {x: spec.center.x, y: spec.canvasSize.height - spec.center.y}, radius: spec.size.x / 2 };
             
-            let landerMinX = Math.floor((spec.center.x - spec.size.x) / spec.canvasSize.width * lst.length);
-            let landerMaxX = Math.floor((spec.center.x + spec.size.x) / spec.canvasSize.width * lst.length);
+            let landerMinX = Math.floor((spec.center.x - spec.size.x / 2) / spec.canvasSize.width * myTerrain.lst.length);
+            let landerMaxX = Math.floor((spec.center.x + spec.size.x / 2) / spec.canvasSize.width * myTerrain.lst.length);
             
             for (let i = landerMinX; i < landerMaxX; i++) {
-                let pt1 = { x: i, y: spec.canvasSize.height - lst[i] };  // calculate canvas height 
-                let pt2 = { x: i + 1, y: spec.canvasSize.height - lst[i + 1] };
+                let pt1 = { x: i, y: spec.canvasSize.height - myTerrain.lst[i] };  // calculate canvas height 
+                let pt2 = { x: i + 1, y: spec.canvasSize.height - myTerrain.lst[i + 1] };
 
                 // IDK why but this /isn't/ working; it only detects collisions at x's starting point...
                 // if (lineCircleIntersection(pt1, pt2, circle)) {
@@ -93,22 +92,30 @@ MyGame.objects.Lander = function(spec) {
                 //     // console.log(pt1, pt2, circle)
                 // }
                 if (pt1.y > circle.center.y - circle.radius || pt2.y > circle.center.y - circle.radius) {
-                    // console.log("collision? ", pt1, pt2, circle);
                     collided = true;
+
+                    console.log("collided! ", landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.safeZoneDistance);
+                    if (landerMinX < myTerrain.safeZoneStartX || landerMaxX > myTerrain.safeZoneStartX + myTerrain.safeZoneDistance) {
+                        crashed = true;
+                    }
                 }
             }
         }
     }
 
-    function update(lst, particleManager) {
+    function update(myTerrain, particleManager) {
         if (!collided) {
             updateMomentum();
             updatePosition();
             updateOrientation();
-            checkCollisions(lst);    
-        } else if (!crashed){
-            crashed = true;
+            checkCollisions(myTerrain);    
+        }
+        else if (!crashed){
+            // new level now :)
+        }
+        else if (crashed) {
             particleManager.shipCrash(spec.center.x, spec.center.y);
+            console.log("crashed!");
         }
     }
 
@@ -136,23 +143,28 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function turnLeft(elapsedTime) {
-        rotation -= (Math.PI / 1000) * elapsedTime;  // 1000 because that's a good arbitrary number for slow turns
-        rotation %= 360 * Math.PI / 180;
-        if (rotation < 0) {
-            rotation = 360 * Math.PI / 180 + rotation;
+        if (!crashed) {
+            rotation -= (Math.PI / 1000) * elapsedTime;  // 1000 because that's a good arbitrary number for slow turns
+            rotation %= 360 * Math.PI / 180;
+            if (rotation < 0) {
+                rotation = 360 * Math.PI / 180 + rotation;
+            }    
         }
     }
 
     function turnRight(elapsedTime) {
-        rotation += (Math.PI / 1000) * elapsedTime;  // 1000 because that's a good arbitrary number for slow turns
-        rotation %= 360 * Math.PI / 180;
-        if (rotation < 0) {
-            rotation = 360 * Math.PI / 180 + rotation;
+        if (!crashed) {
+            rotation += (Math.PI / 1000) * elapsedTime;  // 1000 because that's a good arbitrary number for slow turns
+            rotation %= 360 * Math.PI / 180;
+            if (rotation < 0) {
+                rotation = 360 * Math.PI / 180 + rotation;
+            }    
         }
     }
 
-    function moveUp(elapsedTime) {
-        if (fuel > 0) {
+    function moveUp(elapsedTime, particleManager) {
+        if (fuel > 0 && !crashed) {
+
             if (orientation.x > 0) {
                 momentum.x += 0.003 * elapsedTime;
             } 
@@ -169,8 +181,6 @@ MyGame.objects.Lander = function(spec) {
     
             fuel -= .1;
         }
-
-
     }
 
     function moveTo(pos) {
@@ -199,6 +209,7 @@ MyGame.objects.Lander = function(spec) {
         turnRight: turnRight,
         moveUp: moveUp,
         moveTo: moveTo,
+        get crashed() { return crashed; },
         get imageReady() { return imageReady; },
         get rotation() { return rotation; },
         get gravity() { return gravity; },
