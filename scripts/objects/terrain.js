@@ -158,6 +158,16 @@ MyGame.objects.terrain = function(spec) {
         }
     }
 
+    // function update(myLander) {
+    //     if (myLander.collided) {
+    //         if (level == 1) {
+    //             level = 2;
+    //         }
+
+    //         initializeList
+    //     }
+    // }
+
     let lst = initializeList();
 
     let api = {
