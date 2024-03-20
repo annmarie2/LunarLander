@@ -4,26 +4,6 @@ MyGame.input.Keyboard = function (elapsedTime) {
         handlers: {}
     };
 
-    // added below
-
-    // let turnLeft = 'a';
-    // let turnRight = 'd';
-    // let moveUp = 'w';
-
-    // function changeTurnLeft(key) {
-    //     turnLeft = key;
-    // }
-
-    // function changeTurnRight(key) {
-    //     turnRight = key;
-    // }
-
-    // function changeMoveUp(key) {
-    //     moveUp = key;
-    // }
-
-    // added above
-
     function keyPress(e) {
         that.keys[e.key] = e.timeStamp;
     }

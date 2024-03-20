@@ -2,8 +2,6 @@ MyGame.screens['high-scores'] = (function(game, persistence) {
     'use strict';
     
     function initialize() {
-        // persistence.add(1,2);
-        // persistence.add(3,4);
         persistence.reportScores();
 
         document.getElementById('id-high-scores-back').addEventListener(
@@ -11,8 +9,6 @@ MyGame.screens['high-scores'] = (function(game, persistence) {
             function() { 
                 game.showScreen('main-menu'); 
             });
-
-        // document.getElementById('id-high-scores-list').textContent = "poo";
     }
     
     function run() {

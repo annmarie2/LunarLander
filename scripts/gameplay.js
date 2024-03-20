@@ -5,7 +5,6 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let cancelNextRequest = true;
 
     let myKeyboard = input.Keyboard();
-    // let myControls = input.Controls();
 
     let myBackground = objects.Background({
         imageSrc: 'assets/m106.jpg',
@@ -54,7 +53,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         safeZoneDistance: 40,
         canvasHeight: graphics.canvas.height,
         canvasWidth: graphics.canvas.width,
-        level: 1
+        level: 2
     });
 
     function registerKeys() {
@@ -77,31 +76,11 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     }
 
     function update(elapsedTime) {
-        // if (!myLander.collided) {
-            myLander.update(myTerrain, particleManager, persistence);
-            fuelText.updateFuel(myLander.fuel);
-            verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
-            angleText.updateAngle(myLander.angle());
-            particleManager.update(myLander, elapsedTime);
-            // registerKeys();
-
-            // particlesThrust.update({ 
-            //     center: {x: myLander.center.x, y: myLander.center.y}, 
-            //     rotate: false, 
-            //     systemLifetime: myLander.fuel, 
-            //     direction: { max: myLander.rotation + (5 * Math.PI / 180) + (Math.PI / 2), min: myLander.rotation - (5 * Math.PI / 180) + (Math.PI / 2) } 
-            // }, 
-            // elapsedTime);
-    
-        // } else {
-            // particlesFire.update({ 
-            //     center: {x: myLander.center.x, y: myLander.center.y}, 
-            //     rotate: true, 
-            //     systemLifetime: 5, 
-            //     direction: { max: 2 * Math.PI, min: 0 } 
-            // }, 
-            // elapsedTime);
-        // }
+        myLander.update(myTerrain, particleManager, persistence);
+        fuelText.updateFuel(myLander.fuel);
+        verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
+        angleText.updateAngle(myLander.angle());
+        particleManager.update(myLander, elapsedTime);
     }
 
     function render() {
@@ -130,22 +109,6 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     }
 
     function initialize() {
-        // myKeyboard.register('s', myLander.moveDown);
-
-        // registerKeys(myKeyboard);
-        // myKeyboard.register(persistence.getMoveUp(), myLander.moveUp);
-        // myKeyboard.register(persistence.getMoveUp(), particleManager.toggleShowThrust);
-        // myKeyboard.register(persistence.getTurnLeft(), myLander.turnLeft);
-        // myKeyboard.register(persistence.getTurnRight(), myLander.turnRight);
-        // myKeyboard.register('Escape', function() {
-        //     //
-        //     // Stop the game loop by canceling the request for the next animation frame
-        //     cancelNextRequest = true;
-        //     //
-        //     // Then, return to the main menu
-        //     game.showScreen('main-menu');
-        // });
-
         let canvas = document.getElementById('id-canvas');
     }
 

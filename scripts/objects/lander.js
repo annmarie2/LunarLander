@@ -57,31 +57,9 @@ MyGame.objects.Lander = function(spec) {
         spec.center.y += momentum.y;
     }
 
-    // Reference: https://stackoverflow.com/questions/37224912/circle-line-segment-collision
-    function lineCircleIntersection(pt1, pt2, circle) {
-        let v1 = { x: pt2.x - pt1.x, y: pt2.y - pt1.y };
-        let v2 = { x: pt1.x - circle.center.x, y: pt1.y - circle.center.y };
-        let b = -2 * (v1.x * v2.x + v1.y * v2.y);
-        let c =  2 * (v1.x * v1.x + v1.y * v1.y);
-        let d = Math.sqrt(b * b - 2 * c * (v2.x * v2.x + v2.y * v2.y - circle.radius * circle.radius));
-        if (isNaN(d)) { // no intercept
-            return false;
-        }
-        // These represent the unit distance of point one and two on the line
-        let u1 = (b - d) / c;  
-        let u2 = (b + d) / c;
-        if (u1 <= 1 && u1 >= 0) {  // If point on the line segment
-            return true;
-        }
-        if (u2 <= 1 && u2 >= 0) {  // If point on the line segment
-            return true;
-        }
-        return false;
-    }
-
     function inSafeZone(myTerrain, minX, maxX) {
-        console.log(myTerrain);
-        console.log("minX: ", minX, "maxX: ", maxX, "myTerrain.safeZoneStartX: ", myTerrain.safeZoneStartX, "myTerrain.safeZoneStartX2: ", myTerrain.safeZoneStartX2, "myTerrain.getSafeZoneDistance(): ", myTerrain.getSafeZoneDistance());
+        // console.log(myTerrain);
+        // console.log("minX: ", minX, "maxX: ", maxX, "myTerrain.safeZoneStartX: ", myTerrain.safeZoneStartX, "myTerrain.safeZoneStartX2: ", myTerrain.safeZoneStartX2, "myTerrain.getSafeZoneDistance(): ", myTerrain.getSafeZoneDistance());
         if (myTerrain.level == 1) {
             let landedOne = minX > myTerrain.safeZoneStartX && maxX < myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance();
             let landedTwo = minX > myTerrain.safeZoneStartX2 && maxX < myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance();
@@ -114,16 +92,9 @@ MyGame.objects.Lander = function(spec) {
                 let pt1 = { x: i, y: spec.canvasSize.height - myTerrain.lst[i] };  // calculate canvas height 
                 let pt2 = { x: i + 1, y: spec.canvasSize.height - myTerrain.lst[i + 1] };
 
-                // IDK why but this /isn't/ working; it only detects collisions at x's starting point...
-                // if (lineCircleIntersection(pt1, pt2, circle)) {
-                //     console.log("a collision!!");
-                //     // console.log(pt1, pt2, circle)
-                // }
                 if (pt1.y > circle.center.y - circle.radius || pt2.y > circle.center.y - circle.radius) {
                     collided = true;
 
-                    console.log("collided! ", landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance(), myTerrain.safeZoneStartX2, myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance());
-                    // console.log(!inSafeZone(landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneDistance), !specsGood());
                     if (!inSafeZone(myTerrain, landerMinX, landerMaxX) || !specsGood()) {
                         crashed = true;
                         console.log("crashed!");
@@ -138,7 +109,6 @@ MyGame.objects.Lander = function(spec) {
     function updateScore(persistence) {
         if (endTime != null) {
             score = Math.floor(endTime - startTime + fuel);
-            // console.log(persistence);
             persistence.addScore(score, score);
         }
     }
