@@ -7,6 +7,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let myKeyboard = input.Keyboard();
     // console.log(input);
     let myControls = input.Controls();
+    let particleManager = systems.ParticleSystemManager;
 
     let myBackground = objects.Background({  // ADDED THIS!!
         imageSrc: 'assets/m106.jpg',
@@ -19,7 +20,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         center: { x: 50, y: 50 },
         size: { x: 35, y: 35 },
         moveRate: 500 / 1000,    // pixels per millisecond
-        canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height }
+        canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height },
+        particleManager: particleManager
     });
 
     let fuelText = objects.Text({
@@ -55,30 +57,17 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         canvasWidth: graphics.canvas.width
     });
 
-    //
-    // Define a sample particle system to demonstrate its capabilities
-    // let particles = systems.ParticleSystem({
+    // let particlesFire = systems.ParticleSystem({
     //         center: { x: 300, y: 300 },
-    //         radius: 10,
-    //         startAngle: 0,
-    //         endAngle: 2 * Math.PI,
-    //         speed: { mean: 50, stdev: 25 },
-    //         lifetime: { mean: 4, stdev: 1 },
-    //         systemLifetime: 500
+    //         size: { mean: 10, stdev: 4 },
+    //         speed: { mean: 100, stdev: 25 },
+    //         lifetime: { mean: 2.5, stdev: 1 },
+    //         systemLifetime: 1.5,
+    //         direction: {max: 2 * Math.PI, min: 0},
+    //         generateNew: true
     //     },
-    //     graphics);  
-    // let renderFire = renderer.ParticleSystem(particles, graphics, 'rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)');
-    let particlesFire = systems.ParticleSystem({
-            center: { x: 300, y: 300 },
-            size: { mean: 10, stdev: 4 },
-            speed: { mean: 100, stdev: 25 },
-            lifetime: { mean: 2.5, stdev: 1 },
-            systemLifetime: 1.5,
-            direction: {max: 2 * Math.PI, min: 0},
-            generateNew: true
-        },
-        graphics);
-    let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
+    //     graphics);
+    // let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
 
     let particlesThrust = systems.ParticleSystem({
             center: { x: myLander.center.x, y: myLander.center.y },
@@ -99,7 +88,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     }
 
     function update(elapsedTime) {
-        if (!myLander.collided) {
+        // if (!myLander.collided) {
             myLander.update(myTerrain.lst);
             fuelText.updateFuel(myLander.fuel);
             verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
@@ -113,15 +102,15 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             }, 
             elapsedTime);
     
-        } else {
-            particlesFire.update({ 
-                center: {x: myLander.center.x, y: myLander.center.y}, 
-                rotate: true, 
-                systemLifetime: 5, 
-                direction: { max: 2 * Math.PI, min: 0 } 
-            }, 
-            elapsedTime);
-        }
+        // } else {
+            // particlesFire.update({ 
+            //     center: {x: myLander.center.x, y: myLander.center.y}, 
+            //     rotate: true, 
+            //     systemLifetime: 5, 
+            //     direction: { max: 2 * Math.PI, min: 0 } 
+            // }, 
+            // elapsedTime);
+        // }
     }
 
     function render() {
@@ -133,12 +122,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         renderer.Text.render(verticalSpeedText);
         renderer.Text.render(angleText);
 
-        if (!myLander.collided) {
+        // if (!myLander.collided) {
             renderThrust.render();
             renderer.Lander.render(myLander);
-        } else {
-            renderFire.render();
-        }
+        // } else {
+            // renderFire.render();
+        // }
 
         // render the particles
         // for (let particle = particles.length - 1; particle >=0; particle--) {

@@ -51,6 +51,14 @@ MyGame.systems.ParticleSystem = function(spec) {
         generateNew = true;
     }
 
+    function shipThrust(myLander) {
+
+    }
+
+    function shipCrash(myLander) {
+        
+    }
+
     //------------------------------------------------------------------
     //
     // Update the state of all particles.  This includes removing any that have exceeded their lifetime.
@@ -124,9 +132,12 @@ MyGame.systems.ParticleSystem = function(spec) {
 
     let api = {
         update: update,
+        shipThrust: shipThrust,
+        shipCrash: shipCrash,
         toggleGenerateNew: toggleGenerateNew,
         get generateNew() { return generateNew; },
-        get particles() { return particles; }
+        get particles() { return particles; },
+        get systemLifetime() { return systemLifetime; }
     };
 
     return api;

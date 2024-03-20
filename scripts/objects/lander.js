@@ -25,6 +25,9 @@ MyGame.objects.Lander = function(spec) {
     let image = new Image();
     let collided = false;
 
+    // let myKeyboard = input.Keyboard();
+
+
     image.onload = function() {
         imageReady = true;
     };
@@ -95,10 +98,14 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function update(lst) {
-        updateMomentum();
-        updatePosition();
-        updateOrientation();
-        checkCollisions(lst);    
+        if (!collided) {
+            updateMomentum();
+            updatePosition();
+            updateOrientation();
+            checkCollisions(lst);    
+        } else {
+            spec.particleManager.shipCrash(spec.center.x, spec.center.y);
+        }
     }
 
     function updateOrientation() {
