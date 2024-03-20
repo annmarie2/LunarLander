@@ -62,7 +62,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
 
     function update(elapsedTime) {
         // if (!myLander.collided) {
-            myLander.update(myTerrain, particleManager);
+            myLander.update(myTerrain, particleManager, persistence);
             fuelText.updateFuel(myLander.fuel);
             verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
             angleText.updateAngle(myLander.angle());

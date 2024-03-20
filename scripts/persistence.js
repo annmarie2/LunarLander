@@ -40,7 +40,7 @@ MyGame.persistence = (function () {
             // htmlNode.innerHTML += ('Key: ' + key + ' Value: ' + highScores[key] + '<br/>'); 
             htmlNode.innerHTML += (highScores[key] + '<br/>'); 
         }
-        // htmlNode.scrollTop = htmlNode.scrollHeight;
+        htmlNode.scrollTop = htmlNode.scrollHeight;
     }
 
     // Custom keys functions

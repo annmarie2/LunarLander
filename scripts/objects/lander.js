@@ -28,6 +28,10 @@ MyGame.objects.Lander = function(spec) {
     let collided = false;
     let crashed = false;
 
+    let startTime = performance.now();
+    let endTime = null;
+    let score = 0;
+
     // let myKeyboard = input.Keyboard();
 
     image.onload = function() {
@@ -113,21 +117,33 @@ MyGame.objects.Lander = function(spec) {
                     if (!inSafeZone(landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneDistance) || !specsGood()) {
                         crashed = true;
                         console.log("crashed!");
+                    } else {
+                        endTime = performance.now();
                     }
                 }
             }
         }
     }
 
-    function update(myTerrain, particleManager) {
+    function updateScore(persistence) {
+        if (endTime != null) {
+            score = Math.floor(endTime - startTime + fuel);
+            // console.log(persistence);
+            persistence.addScore(score, score);
+        }
+    }
+
+    function update(myTerrain, particleManager, persistence) {
         if (!collided) {
             updateMomentum();
             updatePosition();
             updateOrientation();
-            checkCollisions(myTerrain);    
+            checkCollisions(myTerrain);
         }
         else if (!crashed){
             // new level now :)
+            updateScore(persistence);
+            console.log(score);
         }
         else {
             particleManager.shipCrash(spec.center.x, spec.center.y);
