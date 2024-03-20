@@ -20,13 +20,14 @@ MyGame.persistence = (function () {
     }
 
     function report() {
-        let htmlNode = document.getElementById('div-console');
+        let htmlNode = document.getElementById('high-scores-list');
         
         htmlNode.innerHTML = '';
         for (let key in highScores) {
-            htmlNode.innerHTML += ('Key: ' + key + ' Value: ' + highScores[key] + '<br/>'); 
+            // htmlNode.innerHTML += ('Key: ' + key + ' Value: ' + highScores[key] + '<br/>'); 
+            htmlNode.innerHTML += (highScores[key] + '<br/>'); 
         }
-        htmlNode.scrollTop = htmlNode.scrollHeight;
+        // htmlNode.scrollTop = htmlNode.scrollHeight;
     }
 
     return {
