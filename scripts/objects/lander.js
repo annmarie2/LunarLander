@@ -75,6 +75,20 @@ MyGame.objects.Lander = function(spec) {
         return false;
     }
 
+    function inSafeZone(minX, maxX, safeStartX, safeDistance) {
+        if (minX < safeStartX || maxX > safeStartX + safeDistance) {
+            return false;
+        }
+        return true;
+    }
+
+    function specsGood() {
+        if (verticalSpeed() > 2 || angle() > 10 * Math.PI / 180) { // same as in text.js
+            return false;
+        }
+        return true;
+    }
+
     function checkCollisions(myTerrain) {
         if (myTerrain.lst.length > 1) {
             let circle = { center: {x: spec.center.x, y: spec.canvasSize.height - spec.center.y}, radius: spec.size.x / 2 };
@@ -95,8 +109,10 @@ MyGame.objects.Lander = function(spec) {
                     collided = true;
 
                     console.log("collided! ", landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.safeZoneDistance);
-                    if (landerMinX < myTerrain.safeZoneStartX || landerMaxX > myTerrain.safeZoneStartX + myTerrain.safeZoneDistance) {
+                    // console.log(!inSafeZone(landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneDistance), !specsGood());
+                    if (!inSafeZone(landerMinX, landerMaxX, myTerrain.safeZoneStartX, myTerrain.safeZoneDistance) || !specsGood()) {
                         crashed = true;
+                        console.log("crashed!");
                     }
                 }
             }
@@ -113,9 +129,8 @@ MyGame.objects.Lander = function(spec) {
         else if (!crashed){
             // new level now :)
         }
-        else if (crashed) {
+        else {
             particleManager.shipCrash(spec.center.x, spec.center.y);
-            console.log("crashed!");
         }
     }
 
