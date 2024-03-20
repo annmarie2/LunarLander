@@ -132,7 +132,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
 
-        registerKeys(myKeyboard);
+        // registerKeys(myKeyboard);
         // myKeyboard.register(persistence.getMoveUp(), myLander.moveUp);
         // myKeyboard.register(persistence.getMoveUp(), particleManager.toggleShowThrust);
         // myKeyboard.register(persistence.getTurnLeft(), myLander.turnLeft);
@@ -150,6 +150,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     }
 
     function run() {
+        registerKeys();
         lastTimeStamp = performance.now();
         cancelNextRequest = false;
         requestAnimationFrame(gameLoop);
