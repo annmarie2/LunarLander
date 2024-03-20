@@ -10,28 +10,45 @@ MyGame.screens['custom-control'] = (function(game, input, persistence) {
 
     persistence.reportCustomControls();
 
-    function customTurnLeft() {
-        window.addEventListener('keydown', function (e) {
-            console.log("turnLeft", e.key);
-            // myControls.changeTurnLeft(e.key, persistence);
-            persistence.changeCustomControl('left', e.key);
-        });
+    // function customTurnLeft() {
+    //     window.addEventListener('keydown', function (e) {
+    //         console.log("turnLeft", e.key);
+    //         // myControls.changeTurnLeft(e.key, persistence);
+    //         persistence.changeCustomControl('left', e.key);
+    //     });
+    // }
+
+    // function customTurnRight() {
+    //     window.addEventListener('keydown', function (e) {
+    //         console.log("turnRight", e.key);
+    //         // myControls.changeTurnRight(e.key);
+    //         persistence.changeCustomControl('right', e.key);
+    //     });
+    // }
+
+    // function customMoveUp() {
+    //     window.addEventListener('keydown', function (e) {
+    //         console.log("moveUp", e.key);
+    //         // myControls.changeMoveUp(e.key);
+    //         persistence.changeCustomControl('up', e.key);
+    //     });
+    // }
+
+    function keydownHandler(action, event) {
+        // Prevent default action of the key press (e.g., scrolling)
+        event.preventDefault();
+
+        // Store the key in local storage
+        persistence.changeCustomControl(action, event.key);
+
+        // Remove the event listener to prevent further key presses from being captured
+        document.removeEventListener("keydown", keydownHandler);
     }
 
-    function customTurnRight() {
-        window.addEventListener('keydown', function (e) {
-            console.log("turnRight", e.key);
-            // myControls.changeTurnRight(e.key);
-            persistence.changeCustomControl('right', e.key);
-        });
-    }
-
-    function customMoveUp() {
-        window.addEventListener('keydown', function (e) {
-            console.log("moveUp", e.key);
-            // myControls.changeMoveUp(e.key);
-            persistence.changeCustomControl('up', e.key);
-        });
+    function setControl(action) {
+        document.addEventListener("keydown", (event) => {
+            keydownHandler(action, event);
+        }, {once: true}); // This ensures the event listener is removed after the first keydown event
     }
     
     function initialize() {
@@ -40,19 +57,17 @@ MyGame.screens['custom-control'] = (function(game, input, persistence) {
             function() { game.showScreen('main-menu'); }
         );
 
-        document.getElementById('id-custom-control-turn-left').addEventListener(
-            'click',
-            customTurnLeft
-            );
+        document.getElementById('id-custom-control-turn-left').addEventListener('click', function() { 
+            setControl("left"); 
+        });
 
-        document.getElementById('id-custom-control-turn-right').addEventListener(
-            'click',
-            customTurnRight
-            );
+        document.getElementById('id-custom-control-turn-right').addEventListener('click', function() { 
+            setControl("right"); 
+        });
 
-        document.getElementById('id-custom-control-move-up').addEventListener(
-            'click',
-            customMoveUp);
+        document.getElementById('id-custom-control-move-up').addEventListener('click', function() { 
+            setControl("up"); 
+        });
     }
     
     function run() {
