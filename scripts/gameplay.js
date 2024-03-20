@@ -5,6 +5,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     let cancelNextRequest = true;
 
     let myKeyboard = input.Keyboard();
+    let soundPlayer = player
 
     let myBackground = objects.Background({
         imageSrc: 'assets/m106.jpg',
