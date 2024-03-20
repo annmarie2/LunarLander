@@ -114,10 +114,15 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
 
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
-        myKeyboard.register(persistence.getMoveUp, myLander.moveUp);
-        myKeyboard.register(persistence.getMoveUp, particleManager.toggleShowThrust);
-        myKeyboard.register(persistence.getTurnLeft, myLander.turnLeft);
-        myKeyboard.register(persistence.getTurnRight, myLander.turnRight);
+
+        console.log(persistence.getTurnLeft);
+        console.log(persistence.getTurnRight);
+        console.log(persistence.getMoveUp);
+
+        myKeyboard.register(persistence.getMoveUp(), myLander.moveUp);
+        myKeyboard.register(persistence.getMoveUp(), particleManager.toggleShowThrust);
+        myKeyboard.register(persistence.getTurnLeft(), myLander.turnLeft);
+        myKeyboard.register(persistence.getTurnRight(), myLander.turnRight);
         myKeyboard.register('Escape', function() {
             //
             // Stop the game loop by canceling the request for the next animation frame

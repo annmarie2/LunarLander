@@ -18,7 +18,7 @@ MyGame.persistence = (function () {
     console.log(previousControls);
 
     if (previousControls !== null) {
-        customControls = JSON.parse(previousScores);
+        customControls = JSON.parse(previousControls);
     }
 
     // High scores functions
@@ -44,20 +44,19 @@ MyGame.persistence = (function () {
     }
 
     // Custom keys functions
-    // function addCustomControl(key, value) {
-    //     customControls[key] = value;
-    //     localStorage['MyGame.customControls'] = JSON.stringify(customControls);
-    // }
-
+    
     function getTurnLeft() {
+        // console.log(customControls['left']);
         return customControls['left'];
     }
 
     function getTurnRight() {
+        // console.log(customControls['right']);
         return customControls['right'];
     }
 
     function getMoveUp() {
+        // console.log(customControls['up']);
         return customControls['up'];
     }
 
