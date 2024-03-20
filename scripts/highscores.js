@@ -8,7 +8,9 @@ MyGame.screens['high-scores'] = (function(game, persistence) {
 
         document.getElementById('id-high-scores-back').addEventListener(
             'click',
-            function() { game.showScreen('main-menu'); });
+            function() { 
+                game.showScreen('main-menu'); 
+            });
 
         // document.getElementById('id-high-scores-list').textContent = "poo";
     }

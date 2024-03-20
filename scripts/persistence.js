@@ -23,6 +23,14 @@ MyGame.persistence = (function () {
 
     // High scores functions
     function addScore(key, value) {
+        // let highScores = JSON.parse(highScores);
+        // if (highScores.length > 5) {
+        //     for (let existingKey in highScores) {
+        //         if (existingKey < key) {
+
+        //         }
+        //     }
+        // }
         highScores[key] = value;
         localStorage['MyGame.highScores'] = JSON.stringify(highScores);
     }
@@ -40,6 +48,10 @@ MyGame.persistence = (function () {
             // htmlNode.innerHTML += ('Key: ' + key + ' Value: ' + highScores[key] + '<br/>'); 
             htmlNode.innerHTML += (highScores[key] + '<br/>'); 
         }
+
+        // Add CSS style to make the scrollbar appear
+        // htmlNode.style.overflow = 'scroll';
+
         htmlNode.scrollTop = htmlNode.scrollHeight;
     }
 
@@ -64,6 +76,9 @@ MyGame.persistence = (function () {
         customControls[key] = value;
         console.log(customControls);
         localStorage['MyGame.customControls'] = JSON.stringify(customControls);
+
+                // location.reload();
+        reportCustomControls();
     }
 
     function reportCustomControls() {

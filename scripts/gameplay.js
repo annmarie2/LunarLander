@@ -57,6 +57,21 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         level: 1
     });
 
+    function registerKeys() {
+        myKeyboard.register(persistence.getMoveUp(), myLander.moveUp);
+        myKeyboard.register(persistence.getMoveUp(), particleManager.toggleShowThrust);
+        myKeyboard.register(persistence.getTurnLeft(), myLander.turnLeft);
+        myKeyboard.register(persistence.getTurnRight(), myLander.turnRight);
+        myKeyboard.register('Escape', function() {
+            //
+            // Stop the game loop by canceling the request for the next animation frame
+            cancelNextRequest = true;
+            //
+            // Then, return to the main menu
+            game.showScreen('main-menu');
+        });
+    }
+
     function processInput(elapsedTime) {
         myKeyboard.update(elapsedTime);
     }
@@ -68,6 +83,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
             verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
             angleText.updateAngle(myLander.angle());
             particleManager.update(myLander, elapsedTime);
+            // registerKeys();
 
             // particlesThrust.update({ 
             //     center: {x: myLander.center.x, y: myLander.center.y}, 
@@ -116,18 +132,19 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     function initialize() {
         // myKeyboard.register('s', myLander.moveDown);
 
-        myKeyboard.register(persistence.getMoveUp(), myLander.moveUp);
-        myKeyboard.register(persistence.getMoveUp(), particleManager.toggleShowThrust);
-        myKeyboard.register(persistence.getTurnLeft(), myLander.turnLeft);
-        myKeyboard.register(persistence.getTurnRight(), myLander.turnRight);
-        myKeyboard.register('Escape', function() {
-            //
-            // Stop the game loop by canceling the request for the next animation frame
-            cancelNextRequest = true;
-            //
-            // Then, return to the main menu
-            game.showScreen('main-menu');
-        });
+        registerKeys(myKeyboard);
+        // myKeyboard.register(persistence.getMoveUp(), myLander.moveUp);
+        // myKeyboard.register(persistence.getMoveUp(), particleManager.toggleShowThrust);
+        // myKeyboard.register(persistence.getTurnLeft(), myLander.turnLeft);
+        // myKeyboard.register(persistence.getTurnRight(), myLander.turnRight);
+        // myKeyboard.register('Escape', function() {
+        //     //
+        //     // Stop the game loop by canceling the request for the next animation frame
+        //     cancelNextRequest = true;
+        //     //
+        //     // Then, return to the main menu
+        //     game.showScreen('main-menu');
+        // });
 
         let canvas = document.getElementById('id-canvas');
     }
