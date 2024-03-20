@@ -83,7 +83,9 @@ MyGame.objects.Lander = function(spec) {
         console.log(myTerrain);
         console.log("minX: ", minX, "maxX: ", maxX, "myTerrain.safeZoneStartX: ", myTerrain.safeZoneStartX, "myTerrain.safeZoneStartX2: ", myTerrain.safeZoneStartX2, "myTerrain.getSafeZoneDistance(): ", myTerrain.getSafeZoneDistance());
         if (myTerrain.level == 1) {
-            if ((minX > myTerrain.safeZoneStartX && maxX < myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance()) || (minX > myTerrain.safeZoneStartX2 && maxX < myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance())) {
+            let landedOne = minX > myTerrain.safeZoneStartX && maxX < myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance();
+            let landedTwo = minX > myTerrain.safeZoneStartX2 && maxX < myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance();
+            if (landedOne || landedTwo) {
                 return true;
             }    
         } else {

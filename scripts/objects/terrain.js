@@ -120,7 +120,7 @@ MyGame.objects.terrain = function(spec) {
             console.log("level == 1");
             addSafeZone(lst, spec.safeZoneDistance + spec.safeZoneDistance / 4, null);
             if (safeZoneStartX < lst.length / 2) {
-                safeZoneStartX2 = safeZoneStartX + Math.floor(lst.length / 3);
+                safeZoneStartX2 = safeZoneStartX + spec.safeZoneDistance * 2;
                 console.log("safeStart, lstLength: ", safeZoneStartX, Math.floor(lst.length / 3));
                 console.log("startX2: ", safeZoneStartX2);
                 // console.log("safeZoneDistance: ", spec.safeZoneDistance * 4); 
@@ -128,7 +128,7 @@ MyGame.objects.terrain = function(spec) {
                 // console.log("safeZoneSTartX2: ", safeZoneStartX2);
 
             } else {
-                safeZoneStartX2 = safeZoneStartX - Math.floor(lst.length / 3);
+                safeZoneStartX2 = safeZoneStartX - spec.safeZoneDistance * 2;
                 
                 console.log("safeStart, lstLength: ", safeZoneStartX, Math.floor(lst.length / 3));
                 console.log("startX2: ", safeZoneStartX2);
