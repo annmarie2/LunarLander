@@ -97,11 +97,11 @@ MyGame.objects.Lander = function(spec) {
                     if (!inSafeZone(myTerrain, landerMinX, landerMaxX) || !specsGood()) {
                         crashed = true;
 
-                        // onclick = "playSound('audio/sound-1', 'Sound 1', 'id-play1', 'id-sound1-played');">
                         spec.soundSystem.playSound('audio/sound-1');
 
                         console.log("crashed!");
                     } else {
+                        spec.soundSystem.playSound('audio/sound-2');
                         endTime = performance.now();
                     }
                 }
