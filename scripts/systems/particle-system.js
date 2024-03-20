@@ -5,6 +5,8 @@
 //------------------------------------------------------------------
 MyGame.systems.ParticleSystem = function(spec) {
     'use strict';
+    // console.log(spec);
+
     let nextName = 1;       // Unique identifier for the next particle
     let particles = {};
     let systemLifetime = spec.systemLifetime;

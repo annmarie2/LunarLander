@@ -22,6 +22,7 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
             },
             graphics);
         let renderFire = renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png');
+        console.log(renderer, renderer.ParticleSystem(particlesFire, graphics, 'assets/fireball.png'))
 
         // console.log(particlesFire.systemLifetime);
 
@@ -39,12 +40,13 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
             }, 
             elapsedTime);
 
+            // console.log(renderFire);
             renderFire.render();
 
-            console.log("in while loop");
+            // console.log("in while loop");
         }
 
-        console.log("exited while loop");
+        // console.log("exited while loop");
     }
 
     let api = {
