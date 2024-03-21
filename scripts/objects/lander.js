@@ -203,6 +203,8 @@ MyGame.objects.Lander = function(spec) {
     
             fuel -= .1;
         }
+
+        spec.soundSystem.playSound('audio/sound-3');
     }
 
     function moveTo(pos) {

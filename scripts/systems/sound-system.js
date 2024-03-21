@@ -38,6 +38,7 @@ MyGame.systems.SoundSystem = (function(spec) {
         MyGame.sounds['audio/sound-1'] = loadSound('audio/sound-1.mp3', 'Sound 1', 'id-play1');
         // Reference: https://freesound.org//data/previews/109/109662_945474-lq.mp3
         MyGame.sounds['audio/sound-2'] = loadSound('audio/sound-2.mp3', 'Sound 2', 'id-play2');
+        MyGame.sounds['audio/sound-3'] = loadSound('audio/sound-3.wav', 'Sound 3', 'id-play3');
         // Reference: https://www.bensound.com/royalty-free-music/track/extreme-action
         // MyGame.sounds['audio/bensound-extremeaction'] = loadSound('audio/bensound-extremeaction.mp3', 'Music', 'id-play3');
     }

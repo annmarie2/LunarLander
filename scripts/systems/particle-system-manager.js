@@ -9,8 +9,6 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
     let particlesThrust = null;
     let renderThrust = null;
 
-    // let showThrust = false;
-
     let particlesFire = null;
     let renderFire = null;
 
@@ -51,7 +49,7 @@ MyGame.systems.ParticleSystemManager = (function(systems, renderer, graphics) {
                 center: {x: myLander.center.x, y: myLander.center.y}, 
                 rotate: false, 
                 systemLifetime: myLander.fuel, 
-                direction: { max: myLander.rotation + (5 * Math.PI / 180) + (Math.PI / 2), min: myLander.rotation - (5 * Math.PI / 180) + (Math.PI / 2) } 
+                direction: { max: myLander.rotation + (8 * Math.PI / 180) + (Math.PI / 2), min: myLander.rotation - (8 * Math.PI / 180) + (Math.PI / 2) } 
             }, 
             elapsedTime);
         }
