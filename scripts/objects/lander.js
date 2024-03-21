@@ -217,6 +217,27 @@ MyGame.objects.Lander = function(spec) {
         }
     }
 
+    function refresh() {
+        rotation = 90 * Math.PI / 180; // start the lander on its side
+        gravity = { x: 0, y: 0.01 };
+        momentum = {x: 1.0, y: 0 };
+        thrust = { x: 0, y: 0 };
+        orientation = { x: 1, y: 0};
+        fuel = 20;
+        imageReady = false;
+        image = new Image();
+    
+        // prolly consolidate these two eventually 
+        collided = false;
+        crashed = false;
+        blownUp = false;
+        wonLevel = false;
+    
+        startTime = performance.now();
+        endTime = null;
+        score = 0;
+    }
+
     let api = {
         updateRotation: updateRotation,
         verticalSpeed: verticalSpeed,
@@ -226,6 +247,7 @@ MyGame.objects.Lander = function(spec) {
         turnRight: turnRight,
         moveUp: moveUp,
         moveTo: moveTo,
+        refresh: refresh,
         get wonLevel() { return wonLevel; },
         get crashed() { return crashed; },
         get imageReady() { return imageReady; },

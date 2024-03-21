@@ -94,7 +94,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
                 console.log("won level 1!!");
                 gameLevel = 2;
 
-                renderer.Text.render(winText);
+                // renderer.Text.render(winText);
 
                 // myTerrain.nextLevel;
                 myTerrain = objects.terrain({
@@ -106,14 +106,19 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
                     level: gameLevel
                 });
 
-                myLander = objects.Lander({
-                    imageSrc: 'assets/lander.png',
-                    center: { x: 50, y: 50 },
-                    size: { x: 35, y: 35 },
-                    moveRate: 500 / 1000,    // pixels per millisecond
-                    canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height },
-                    soundSystem: soundPlayer
-                });
+                // myLander = null;
+                myLander.refresh();
+
+                // myLander = objects.Lander({
+                //     imageSrc: 'assets/lander.png',
+                //     center: { x: 50, y: 50 },
+                //     size: { x: 35, y: 35 },
+                //     moveRate: 500 / 1000,    // pixels per millisecond
+                //     canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height },
+                //     soundSystem: soundPlayer
+                // });
+
+                console.log(myLander.wonLevel);
             }
         }
         else if (gameLevel == 2) {
@@ -135,7 +140,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
         angleText.updateAngle(myLander.angle());
         particleManager.update(myLander, elapsedTime);
-        updateGameLevel(myLander);
+        // updateGameLevel(myLander);
     }
 
     function render() {
@@ -164,6 +169,9 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     }
 
     function initialize() {
+
+
+
         let canvas = document.getElementById('id-canvas');
     }
 
