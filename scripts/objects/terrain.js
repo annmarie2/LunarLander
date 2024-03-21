@@ -139,7 +139,7 @@ MyGame.objects.terrain = function(spec) {
             addSafeZone(lst, spec.safeZoneDistance, null);
         }
 
-        console.log(safeZoneStartX, safeZoneStartX2);
+        // console.log(safeZoneStartX, safeZoneStartX2);
 
 
 

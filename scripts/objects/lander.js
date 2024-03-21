@@ -218,14 +218,14 @@ MyGame.objects.Lander = function(spec) {
     }
 
     function refresh() {
+        spec.center = { x: 50, y: 50 };
+
         rotation = 90 * Math.PI / 180; // start the lander on its side
         gravity = { x: 0, y: 0.01 };
         momentum = {x: 1.0, y: 0 };
         thrust = { x: 0, y: 0 };
         orientation = { x: 1, y: 0};
         fuel = 20;
-        imageReady = false;
-        image = new Image();
     
         // prolly consolidate these two eventually 
         collided = false;
