@@ -85,3 +85,11 @@ ul.menu li button:active {
 body {
     color: white;
 }
+
+#custom-control {
+    text-align: center;
+}
+
+#help {
+    text-align: center;
+}

@@ -63,6 +63,10 @@ MyGame.objects.Lander = function(spec) {
         if (myTerrain.level == 1) {
             let landedOne = minX > myTerrain.safeZoneStartX && maxX < myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance();
             let landedTwo = minX > myTerrain.safeZoneStartX2 && maxX < myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance();
+            
+            console.log(landedOne, landedTwo);
+            console.log(minX, maxX, myTerrain.safeZoneStartX, myTerrain.safeZoneStartX + myTerrain.getSafeZoneDistance(), myTerrain.safeZoneStartX2, myTerrain.safeZoneStartX2 + myTerrain.getSafeZoneDistance());
+
             if (landedOne || landedTwo) {
                 return true;
             }    
@@ -101,6 +105,7 @@ MyGame.objects.Lander = function(spec) {
                         spec.soundSystem.playSound('audio/sound-1');
 
                         console.log("crashed!");
+
                     } else {
                         spec.soundSystem.playSound('audio/sound-2');
                         wonLevel = true;
@@ -217,6 +222,10 @@ MyGame.objects.Lander = function(spec) {
         }
     }
 
+    function wonLevelFalse() {
+        wonLevel = false;
+    }
+
     function refresh() {
         spec.center = { x: 50, y: 50 };
 
@@ -248,6 +257,7 @@ MyGame.objects.Lander = function(spec) {
         moveUp: moveUp,
         moveTo: moveTo,
         refresh: refresh,
+        wonLevelFalse: wonLevelFalse,
         get wonLevel() { return wonLevel; },
         get crashed() { return crashed; },
         get imageReady() { return imageReady; },

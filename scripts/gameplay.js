@@ -96,13 +96,6 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         });
     }
 
-    // let winText = objects.Text({
-    //     text: "SUCCESSFUL LANDING",
-    //     font: '16pt Arial',
-    //     fillStyle: 'rgba(0, 255, 0, 1)',
-    //     strokeStyle: 'rgba(0, 0, 0, 1)',
-    //     position: { x: graphics.canvas.width / 2, y: graphics.canvas.height / 2 }
-    // });
 
     function countDownAnimation(callback) {
         let count = 3;
@@ -139,6 +132,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
     function updateGameLevel(myLander) {
         if (gameLevel == 1) {
             if (myLander.wonLevel) {
+                myLander.wonLevelFalse();
+
                 console.log("won level 1!!");
                 gameLevel = 2;
 
@@ -160,12 +155,16 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
                     console.log(myLander.wonLevel);
                 });
             }
+            console.log(myLander.wonLevel);
         }
         else if (gameLevel == 2) {
+            console.log(myLander.wonLevel);
             if (myLander.wonLevel) {
                 console.log("won level 2!!");
                 gameLevel = 3;
                 // some animation here to say you won :)
+                winText.updateText("YOU WON!");
+                renderer.Text.render(winText);
             }
         }
     }
