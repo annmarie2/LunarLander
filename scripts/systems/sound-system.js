@@ -9,24 +9,24 @@ MyGame.systems.SoundSystem = (function(spec) {
     function loadSound(source, label, idButton) {
         let sound = new Audio();
         sound.addEventListener('canplay', function() {
-            console.log(`${source} is ready to play`);
+            // console.log(`${source} is ready to play`);
         });
         sound.addEventListener('play', function() {
-            let elementButton = document.getElementById(idButton);
-            elementButton.innerHTML = label + ' - Pause!'
-            console.log(`${source} started playing`);
+            // let elementButton = document.getElementById(idButton);
+            // elementButton.innerHTML = label + ' - Pause!'
+            // console.log(`${source} started playing`);
         });
         sound.addEventListener('pause', function() {
-            console.log(`${source} paused`);
+            // console.log(`${source} paused`);
         });
         sound.addEventListener('canplaythrough', function() {
-            console.log(`${source} can play through`);
+            // console.log(`${source} can play through`);
         });
         sound.addEventListener('progress', function() {
-            console.log(`${source} progress in loading`);
+            // console.log(`${source} progress in loading`);
         });
         sound.addEventListener('timeupdate', function() {
-            console.log(`${source} time update: ${this.currentTime}`);
+            // console.log(`${source} time update: ${this.currentTime}`);
         });
         sound.src = source;
         return sound;

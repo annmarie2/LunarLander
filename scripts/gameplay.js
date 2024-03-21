@@ -56,12 +56,20 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         position: { x: graphics.canvas.width - 120, y: 80 }
     });
 
-    let winText = objects.Text({
-        text: "SUCCESSFUL LANDING",
-        font: '16pt Arial',
-        fillStyle: 'rgba(0, 255, 0, 1)',
+    let countdownText = objects.Text({
+        text: "",
+        font: '25pt Arial',
+        fillStyle: 'rgba(255, 255, 255, 1)', // White color
         strokeStyle: 'rgba(0, 0, 0, 1)',
-        position: { x: graphics.canvas.width / 2, y: graphics.canvas.height / 2 }
+        position: { x: graphics.canvas.width / 2, y: graphics.canvas.height / 2 } // Center of the canvas
+    });
+
+    let winText = objects.Text({
+        text: "",
+        font: '25pt Arial',
+        fillStyle: 'rgba(255, 255, 255, 1)',
+        strokeStyle: 'rgba(0, 0, 0, 1)',
+        position: { x: graphics.canvas.width / 5, y: graphics.canvas.height / 3 }
     });
 
     let myTerrain = objects.terrain({
@@ -88,37 +96,69 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         });
     }
 
+    // let winText = objects.Text({
+    //     text: "SUCCESSFUL LANDING",
+    //     font: '16pt Arial',
+    //     fillStyle: 'rgba(0, 255, 0, 1)',
+    //     strokeStyle: 'rgba(0, 0, 0, 1)',
+    //     position: { x: graphics.canvas.width / 2, y: graphics.canvas.height / 2 }
+    // });
+
+    function countDownAnimation(callback) {
+        let count = 3;
+
+        // Render initial count
+        countdownText.updateText(count);
+        winText.updateText("LAND SUCCESSFUL!");
+
+        let interval = setInterval(() => {
+            if (count > 0) {
+                console.log(count); // Output count to console (you can render it on the screen if needed)
+                count--;
+
+                // Update countdown text
+                countdownText.updateText(count);
+
+            } else {
+                clearInterval(interval);
+                callback(); // Execute the callback function after the countdown finishes
+            }
+        }, 1000); // Interval set to 1 second (1000 milliseconds) between counts
+
+        // Function to render countdown text
+        function renderCountdownText() {
+            renderer.Text.render(winText);
+            renderer.Text.render(countdownText);
+        }
+
+        // Render the initial countdown text
+        renderCountdownText();
+    }
+
+
     function updateGameLevel(myLander) {
         if (gameLevel == 1) {
             if (myLander.wonLevel) {
                 console.log("won level 1!!");
                 gameLevel = 2;
 
-                // renderer.Text.render(winText);
+                // Start countdown animation
+                countDownAnimation(() => {
+                    // Callback function: Rebuild myLander and myTerrain after countdown finishes
+                    myTerrain = objects.terrain({
+                        iterations: 8,
+                        s: 1.5,
+                        safeZoneDistance: 40,
+                        canvasHeight: graphics.canvas.height,
+                        canvasWidth: graphics.canvas.width,
+                        level: gameLevel
+                    });
+                    winText.updateText("");
+                    countdownText.updateText("");
 
-                // myTerrain.nextLevel;
-                myTerrain = objects.terrain({
-                    iterations: 8,
-                    s: 1.5,
-                    safeZoneDistance: 40,
-                    canvasHeight: graphics.canvas.height,
-                    canvasWidth: graphics.canvas.width,
-                    level: gameLevel
+                    myLander.refresh();
+                    console.log(myLander.wonLevel);
                 });
-
-                // myLander = null;
-                myLander.refresh();
-
-                // myLander = objects.Lander({
-                //     imageSrc: 'assets/lander.png',
-                //     center: { x: 50, y: 50 },
-                //     size: { x: 35, y: 35 },
-                //     moveRate: 500 / 1000,    // pixels per millisecond
-                //     canvasSize: { width: graphics.canvas.width, height: graphics.canvas.height },
-                //     soundSystem: soundPlayer
-                // });
-
-                console.log(myLander.wonLevel);
             }
         }
         else if (gameLevel == 2) {
@@ -130,6 +170,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         }
     }
 
+
     function processInput(elapsedTime) {
         myKeyboard.update(elapsedTime);
     }
@@ -140,7 +181,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         verticalSpeedText.updateVerticalSpeed(myLander.verticalSpeed());
         angleText.updateAngle(myLander.angle());
         particleManager.update(myLander, elapsedTime);
-        // updateGameLevel(myLander);
+        updateGameLevel(myLander);
     }
 
     function render() {
@@ -151,6 +192,8 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, systems, graphi
         renderer.Text.render(fuelText);
         renderer.Text.render(verticalSpeedText);
         renderer.Text.render(angleText);
+        renderer.Text.render(countdownText);
+        renderer.Text.render(winText);
         particleManager.render();
         renderer.Lander.render(myLander);
     }

@@ -46,10 +46,15 @@ MyGame.objects.Text = function(spec) {
         }
     }
 
+    function updateText(text) {
+        spec.text = text;
+    }
+
     let api = {
         updateFuel: updateFuel,
         updateVerticalSpeed: updateVerticalSpeed,
         updateAngle: updateAngle,
+        updateText: updateText,
         get rotation() { return rotation; },
         get position() { return spec.position; },
         get text() { return spec.text; },

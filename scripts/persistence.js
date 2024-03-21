@@ -5,7 +5,7 @@ MyGame.persistence = (function () {
     let highScores = {};
 
     let previousScores = localStorage.getItem('MyGame.highScores');
-    console.log(previousScores);
+    // console.log(previousScores);
 
     if (previousScores !== null) {
         highScores = JSON.parse(previousScores);
@@ -15,7 +15,7 @@ MyGame.persistence = (function () {
     let customControls = {left: 'a', right: 'd', up: 'w'};
 
     let previousControls = localStorage.getItem('MyGame.customControls');
-    console.log(previousControls);
+    // console.log(previousControls);
 
     if (previousControls !== null) {
         customControls = JSON.parse(previousControls);
